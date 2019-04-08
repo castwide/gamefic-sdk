@@ -1,0 +1,5 @@
+require 'bundler/setup'
+require 'gamefic-sdk'
+
+# Add the default Gamefic tasks for building and running games
+require 'gamefic-sdk/tasks'

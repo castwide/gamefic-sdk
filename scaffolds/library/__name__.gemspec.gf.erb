@@ -1,0 +1,14 @@
+Gem::Specification.new do |spec|
+  spec.name          = '<%= name %>'
+  spec.version       = '1.0.0'
+  spec.summary       = 'A Gamefic library'
+  spec.authors       = ['Anomynous']
+  spec.license       = 'MIT'
+  spec.files         = Dir['lib/**/*.rb']
+
+  spec.add_runtime_dependency 'gamefic', '~> 2.0'
+  spec.add_runtime_dependency 'gamefic-standard', '~> 2.0'
+
+  spec.add_development_dependency 'gamefic-sdk', '~> 2.0'
+  spec.add_development_dependency 'rake', '~> 12.3'
+end
