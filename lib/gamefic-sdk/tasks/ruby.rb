@@ -20,7 +20,9 @@ module Gamefic
 
         def run
           require_relative File.join(absolute_path, 'main')
-          Gamefic::Tty::Engine.run
+          engine = Gamefic::Engine.new
+          character = engine.connect(Gamefic::Tty::User.new)
+          engine.turn until character.concluded?
         end
 
         def build
@@ -91,7 +93,9 @@ require 'gamefic'
 require 'gamefic-tty'
 require 'main'
 puts "\n"
-Gamefic::Tty::Engine.run
+engine = Gamefic::Engine.new
+character = engine.connect(Gamefic::Tty::User.new)
+engine.turn until character.concluded?
 end
 )
         end
