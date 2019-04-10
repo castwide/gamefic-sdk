@@ -8,6 +8,5 @@ gem 'gamefic-standard'
 group :development do
   gem 'gamefic-sdk'
   gem 'gamefic-tty'
-  gem 'gamefic-opal'
   gem 'rake'
 end

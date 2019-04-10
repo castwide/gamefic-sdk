@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.1.0'
 
   s.add_runtime_dependency 'gamefic', '~> 2.0'
-  s.add_runtime_dependency 'gamefic-opal', '~> 2.0'
   s.add_runtime_dependency 'gamefic-standard', '~> 2.0'
   s.add_runtime_dependency 'gamefic-tty', '~> 2.0'
   s.add_runtime_dependency 'opal', '~> 0.11'
