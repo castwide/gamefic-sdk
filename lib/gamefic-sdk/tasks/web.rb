@@ -4,22 +4,8 @@ module Gamefic
       class Web
         include Common
 
-        def self.generate directory = '.'
-          new(directory).generate
-        end
-
-        def self.run directory = '.'
-          new(directory).run
-        end
-
-        def self.serve directory = '.'
-          new(directory).serve
-        end
-
-        def self.build directory = '.'
-          new(directory).build
-        end
-
+        # Generate a web app using NPM.
+        #
         def generate
           Dir.chdir absolute_path do
             nv = `npm -v`.strip
@@ -33,14 +19,23 @@ module Gamefic
           STDERR.puts "Web app generation requires Node (https://nodejs.org)."
         end
 
+        # Run a stand-alone web app using NPM.
+        #
         def run
           check_for_web_build
         end
 
+        # Run the web app in a server using NPM.
+        #
         def serve
           check_for_web_build
+          Dir.chdir absolute_path do
+            exec 'npm run start'
+          end
         end
 
+        # Build a distributable web app using NPM.
+        #
         def build
           check_for_web_build
           Dir.chdir absolute_path do
@@ -53,10 +48,17 @@ module Gamefic
 
         private
 
+        # True if a web build has been generated for the current project.
+        #
+        # @return [Boolean]
         def web_build_exists?
           File.exist?(File.join(absolute_path, 'package.json'))
         end
 
+        # Check if a web build exists.
+        #
+        # @raise [LoadError] if a web build is not available.
+        # @return [void]
         def check_for_web_build
           return if web_build_exists?
           puts 'This project does not appear to be configured for web builds.'

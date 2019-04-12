@@ -10,14 +10,6 @@ module Gamefic
       class Ruby
         include Common
 
-        def self.run directory = '.'
-          new(directory).run
-        end
-
-        def self.build directory = '.'
-          new(directory).build
-        end
-
         def run
           require_relative File.join(absolute_path, 'main')
           Gamefic::Tty::Engine.run

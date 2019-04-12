@@ -11,27 +11,27 @@ module Gamefic::Sdk::Tasks
 
   def define_all
     define_task 'ruby:run', 'Run a Ruby CLI app' do
-      Ruby.run
+      Ruby.new.run
     end
 
     define_task 'ruby:build', 'Build a distributable CLI app' do
-      Ruby.build
+      Ruby.new.build
     end
 
     define_task 'web:generate', 'Generate a web app' do
-      Web.generate
+      Web.new.generate
     end
 
     define_task 'web:run', 'Run a standalone web app' do
-      Web.run
+      Web.new.run
     end
 
     define_task 'web:serve', 'Run the app in a web server' do
-      Web.serve
+      Web.new.serve
     end
 
     define_task 'web:build', 'Build a distributable web app?' do
-      Web.build
+      Web.new.build
     end
   end
 
