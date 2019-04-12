@@ -20,9 +20,7 @@ module Gamefic
 
         def run
           require_relative File.join(absolute_path, 'main')
-          engine = Gamefic::Engine.new
-          character = engine.connect(Gamefic::Tty::User.new)
-          engine.turn until character.concluded?
+          Gamefic::Tty::Engine.run
         end
 
         def build
@@ -84,18 +82,16 @@ require 'base64'
 
 puts 'Loading...'
 Dir.mktmpdir do |tmp|
-zips.each_pair do |file, code|
-  FileUtils.mkdir_p File.join(tmp, 'lib', File.dirname(file))
-  File.write(File.join(tmp, 'lib', file), Zlib::Inflate.inflate(Base64.decode64(code)))
-end
-$LOAD_PATH.unshift File.join(tmp, 'lib')
-require 'gamefic'
-require 'gamefic-tty'
-require 'main'
-puts "\n"
-engine = Gamefic::Engine.new
-character = engine.connect(Gamefic::Tty::User.new)
-engine.turn until character.concluded?
+  zips.each_pair do |file, code|
+    FileUtils.mkdir_p File.join(tmp, 'lib', File.dirname(file))
+    File.write(File.join(tmp, 'lib', file), Zlib::Inflate.inflate(Base64.decode64(code)))
+  end
+  $LOAD_PATH.unshift File.join(tmp, 'lib')
+  require 'gamefic'
+  require 'gamefic-tty'
+  require 'main'
+  puts "\n"
+  Gamefic::Tty::Engine.run
 end
 )
         end
