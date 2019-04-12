@@ -1,28 +1,119 @@
-# Gamefic::Sdk
+# Gamefic SDK
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gamefic/sdk`. To experiment with that code, run `bin/console` for an interactive prompt.
+**A Ruby Interactive Fiction Framework**
 
-TODO: Delete this and the text above, and describe your gem
+The Gamefic SDK provides development tools for writing games and interactive fiction with Gamefic.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'gamefic-sdk'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install the gem:
 
     $ gem install gamefic-sdk
 
 ## Usage
 
-TODO: Write usage instructions here
+This section provides a fast and simple introduction to using the SDK. Go to
+the [Gamefic website](https://gamefic.com) for in-depth guides and
+documentation.
+
+### Creating a New Project
+
+Create a new project and go to its directory:
+
+```
+$ gamefic init my_game
+$ cd my_game
+```
+
+Test the project by running the game on the command line:
+
+```
+$ rake ruby:run
+```
+
+The Ruby game works like a traditional text adventure:
+
+```
+Hello, world!
+>
+```
+
+You can enter commands at the `>` prompt, but you haven't written any content,
+so there's not much to do yet. Enter `QUIT` to exit the game.
+
+### The Script Code
+
+The main script for your narrative is `main.rb` in your project's root
+directory. It should look something like this:
+
+```
+require 'gamefic-standard'
+
+Gamefic.script do
+  introduction do |actor|
+    actor.tell "Hello, world!"
+  end
+end
+```
+
+['gamefic-standard'](https://github.com/castwide/gamefic-standard) is a collection
+of baseline features that are frequently useful for interactive fiction. [Inform](http://inform7.com/)
+developers should find it similar to Inform's Standard Rules. It defines common
+components like Rooms and Characters, along with in-game commands like `GO`,
+`GET`, and `DROP` to enable basic interactivity.
+
+`Gamefic.script` is where you write the story itself. In the starter project,
+the only function it provides is the introductory text.
+
+### Modifying the Script
+
+Replace the contents of `main.rb` with the following:
+
+```
+require 'gamefic-standard'
+
+Gamefic.script do
+  @living_room = make Room, name: 'living room', description: 'This is your living room.'
+  @bedroom = make Room, name: 'bedroom', description: 'This is your bedroom.'
+  @living_room.connect @bedroom, 'north'
+  @backpack = make Room, name: 'backpack', description: 'Your trusty backpack.', parent: @bedroom
+  @book = make Room, name: 'book', description: 'Your favorite novel.', parent: @living_room
+
+  introduction do |actor|
+    actor.parent = @living_room
+    actor.tell "You're in your house."
+  end
+end
+```
+
+Enter `rake ruby:run` to test the game. Now that it has rooms and objects, you
+can perform in-game commands like `LOOK AROUND`, `GO NORTH`, and `TAKE THE BACKPACK`.
+
+### Running the Game in a Browser
+
+The default game project includes tasks for building "web" apps using HTML,
+CSS, and JavaScript. Make a web build with the following commands:
+
+```
+$ rake web:generate
+$ rake web:build
+```
+
+The `web:build` task creates the app in your project's `builds/web` directory.
+Open `index.html` in a browser to play the game.
+
+Note: building the web app requires [Node.js](https://nodejs.org).
+
+### Example Projects
+
+The gamefic-sdk repo includes several example projects that provide more
+more complete demonstrations of Gamefic's features. To run an example, copy
+its `main.rb` file to your own project.
+
+### Learning More
+
+Go to the [Gamefic website](https://gamefic.com) for more information about
+developing and building apps with Gamefic.
 
 ## Development
 
@@ -32,7 +123,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/gamefic-sdk.
+Bug reports and pull requests are welcome on GitHub at https://github.com/castwide/gamefic-sdk.
 
 ## License
 
