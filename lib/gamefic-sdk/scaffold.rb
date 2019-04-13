@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'erb'
 require 'pathname'
+require 'securerandom'
 
 module Gamefic
   module Sdk

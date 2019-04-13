@@ -20,23 +20,17 @@ documentation.
 
 Create a new project and go to its directory:
 
-```
-$ gamefic init my_game
-$ cd my_game
-```
+    $ gamefic init my_game
+    $ cd my_game
 
 Test the project by running the game on the command line:
 
-```
-$ rake ruby:run
-```
+    $ rake ruby:run
 
 The Ruby game works like a traditional text adventure:
 
-```
-Hello, world!
->
-```
+    Hello, world!
+    >
 
 You can enter commands at the `>` prompt, but you haven't written any content,
 so there's not much to do yet. Enter `QUIT` to exit the game.
@@ -46,7 +40,8 @@ so there's not much to do yet. Enter `QUIT` to exit the game.
 The main script for your narrative is `main.rb` in your project's root
 directory. It should look something like this:
 
-```
+```ruby
+GAMEFIC_UUID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 require 'gamefic-standard'
 
 Gamefic.script do
@@ -56,6 +51,10 @@ Gamefic.script do
 end
 ```
 
+`GAMEFIC_UUID` is a globally unique identifier. It can be useful if you want to
+add your game to online catalogs, such as the [Interactive Fiction Database](https://ifdb.tads.org/),
+but it's safe to delete if you don't need it.
+
 ['gamefic-standard'](https://github.com/castwide/gamefic-standard) is a collection
 of baseline features that are frequently useful for interactive fiction. [Inform](http://inform7.com/)
 developers should find it similar to Inform's Standard Rules. It defines common
@@ -63,13 +62,13 @@ components like Rooms and Characters, along with in-game commands like `GO`,
 `GET`, and `DROP` to enable basic interactivity.
 
 `Gamefic.script` is where you write the story itself. In the starter project,
-the only function it provides is the introductory text.
+the only thing in the script is an introductory message.
 
 ### Modifying the Script
 
 Replace the contents of `main.rb` with the following:
 
-```
+```ruby
 require 'gamefic-standard'
 
 Gamefic.script do
