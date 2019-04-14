@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "gamefic/sdk"
+require "gamefic-sdk"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
