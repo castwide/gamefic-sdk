@@ -20,4 +20,13 @@ RSpec.describe Gamefic::Sdk::Scaffold do
       }.not_to raise_error
     end
   end
+
+  it 'sets filenames' do
+    Dir.mktmpdir do |dir|
+      base = File.basename(dir)
+      gemspec = File.join(dir, "#{base}.gemspec")
+      Gamefic::Sdk::Scaffold.build('library', dir)
+      expect(File.exist?(gemspec)).to be(true)
+    end
+  end
 end
