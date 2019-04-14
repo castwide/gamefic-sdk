@@ -1,6 +1,8 @@
 module Gamefic
   module Sdk
     module Tasks
+      # Tasks for running and building web apps.
+      #
       class Web
         include Common
 

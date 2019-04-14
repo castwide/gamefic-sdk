@@ -7,14 +7,20 @@ require 'base64'
 module Gamefic
   module Sdk
     module Tasks
+      # Tasks for running and building Ruby apps.
+      #
       class Ruby
         include Common
 
+        # Run a command-line Ruby app.
+        #
         def run
           require_relative File.join(absolute_path, 'main')
           Gamefic::Tty::Engine.run
         end
 
+        # Build a distributable Ruby app.
+        #
         def build
           current = $LOADED_FEATURES.clone
           require_relative File.join(absolute_path, 'main')

@@ -3,6 +3,8 @@ require 'pathname'
 module Gamefic
   module Sdk
     module Tasks
+      # Common methods for Rake tasks.
+      #
       module Common
         attr_reader :directory
 
