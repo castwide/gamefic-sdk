@@ -40,7 +40,7 @@ module Gamefic
           rename = File.join(File.dirname(file), File.basename(file).gsub('__name__', data.name))
           dst = File.join(destination, rename[dir.length..-1])
           if File.file?(dst)
-            raise RuntimeError, "Gamefic generation would overwrite existing file #{rename}"
+            raise "Gamefic generation would overwrite existing file #{rename}"
           else
             map[file] = dst
           end
