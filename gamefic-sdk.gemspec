@@ -24,10 +24,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'gamefic-standard', '~> 2.0'
   s.add_runtime_dependency 'gamefic-tty', '~> 2.0'
   s.add_runtime_dependency 'opal', '~> 0.11'
-  s.add_runtime_dependency 'uglifier', '~> 3.2'
   s.add_runtime_dependency 'sinatra', '~> 2'
   s.add_runtime_dependency 'thor', '~> 0.19', '>= 0.19.4'
-  s.add_runtime_dependency 'rubyzip', '~> 1.2', '>= 1.2.0'
+  s.add_runtime_dependency 'uglifier', '~> 3.2'
 
   s.add_development_dependency "bundler", "~> 2.0"
   s.add_development_dependency 'capybara', '~> 3.3'

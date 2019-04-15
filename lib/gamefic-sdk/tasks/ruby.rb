@@ -36,8 +36,8 @@ module Gamefic
             files[rel] = Base64.encode64(Zlib::Deflate.deflate(File.read(full)))
           end
           program = program_code(files)
-          FileUtils.mkdir_p File.join('builds', 'ruby')
-          File.write(File.join('builds', 'ruby', "#{File.basename(absolute_path)}.rb"), program)
+          FileUtils.mkdir_p File.join(absolute_path, 'builds', 'ruby')
+          File.write(File.join(absolute_path, 'builds', 'ruby', "#{File.basename(absolute_path)}.rb"), program)
         end
 
         private

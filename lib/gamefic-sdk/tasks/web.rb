@@ -21,18 +21,15 @@ module Gamefic
           STDERR.puts "Web app generation requires Node (https://nodejs.org)."
         end
 
-        # Run a stand-alone web app using NPM.
+        # Run the web app in a server.
         #
         def run
           check_for_web_build
-        end
-
-        # Run the web app in a server using NPM.
-        #
-        def serve
-          check_for_web_build
           Dir.chdir absolute_path do
-            exec 'npm run start'
+            # @todo Determine if there's a reasonable way to make the npm build
+            #   watch the filesystem
+            `npm run build:dev`
+            Gamefic::Sdk::Server.run! source_dir: absolute_path, public_folder: File.join(absolute_path, 'builds', 'dev')
           end
         end
 
@@ -41,7 +38,7 @@ module Gamefic
         def build
           check_for_web_build
           Dir.chdir absolute_path do
-            exec 'npm install && npm run build'
+            exec 'npm run build'
           end
         rescue Errno::ENOENT => e
           STDERR.puts "#{e.class}: #{e.message}"

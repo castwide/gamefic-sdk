@@ -3,37 +3,22 @@ require 'yaml'
 
 module Gamefic
   module Sdk
-
     class Server < Sinatra::Base
       set :port, 4342
       set :server, :webrick
 
       get '/' do
-        config = Gamefic::Sdk::Config.load(settings.source_dir)
-        paths = [config.script_path, config.import_path]
-        @@plot = Gamefic::Plot.new Gamefic::Plot::Source.new(*paths)
-        @@plot.script 'main'
-        index_file = File.join(settings.public_folder, 'index.html')
-        if File.file?(index_file)
-          File.read index_file
-        else
-          ''
-        end
-      end
-
-      get '/core/opal.js' do
-        ''
-      end
-
-      get '/media/:file' do
-        send_file File.join(settings.media_folder, params[:file]), disposition: 'inline'
+        File.read File.join(settings.public_folder, 'index.html')
       end
 
       post '/start' do
         content_type :json
+        @@old_features ||= $LOADED_FEATURES.clone
+        $LOADED_FEATURES.keep_if { |e| @@old_features.include?(e) }
+        Gamefic::Plot.blocks.clear
+        load File.join(settings.source_dir, 'main.rb')
+        @@plot = Gamefic::Plot.new
         @@character = @@plot.get_player_character
-        engine = Gamefic::Engine.new(@@plot)
-        @@plot.authorize Gamefic::User.new(engine), @@character
         @@plot.introduce @@character
         @@plot.ready
         @@character.state.to_json
@@ -49,7 +34,8 @@ module Gamefic
         content_type :json
         @@plot.update
         @@plot.ready
-        @@character.state.merge(input: params['command'], continued: @@character.queue.any?).to_json
+        # @@character.state.merge(input: params['command'], continued: @@character.queue.any?).to_json
+        @@character.state.to_json
       end
 
       post '/restore' do
@@ -63,21 +49,18 @@ module Gamefic
       end
 
       class << self
+        # def run!
+        #   start_browser if settings.browser
+        #   super
+        # end
 
-        def run!
-          start_browser if settings.browser
-          super
-        end
-
-        def start_browser
-          Thread.new {
-            sleep 1 until Server.running?
-            `start http://localhost:#{settings.port}`
-          }
-        end
-
+        # def start_browser
+        #   Thread.new {
+        #     sleep 1 until Server.running?
+        #     `start http://localhost:#{settings.port}`
+        #   }
+        # end
       end
     end
-
   end
 end
