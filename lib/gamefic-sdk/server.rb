@@ -13,9 +13,7 @@ module Gamefic
 
       post '/start' do
         content_type :json
-        @@old_features ||= $LOADED_FEATURES.clone
-        $LOADED_FEATURES.keep_if { |e| @@old_features.include?(e) }
-        Gamefic::Plot.blocks.clear
+        reset_features
         load File.join(settings.source_dir, 'main.rb')
         @@plot = Gamefic::Plot.new
         @@character = @@plot.get_player_character
@@ -46,6 +44,12 @@ module Gamefic
         @@plot.update
         @@plot.ready
         @@character.state.to_json
+      end
+
+      def reset_features
+        @@old_features ||= $LOADED_FEATURES.clone
+        $LOADED_FEATURES.keep_if { |e| @@old_features.include?(e) }
+        Gamefic::Plot.blocks.clear
       end
 
       class << self
