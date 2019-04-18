@@ -28,8 +28,10 @@ module Gamefic
           Dir.chdir absolute_path do
             # @todo Determine if there's a reasonable way to make the npm build
             #   watch the filesystem
-            `npm run build:dev`
-            Gamefic::Sdk::Server.run! source_dir: absolute_path, public_folder: File.join(absolute_path, 'builds', 'dev')
+            pid = Process.spawn('npm run develop')
+            Process.wait pid
+            # @todo Get the public folder from a config?
+            Gamefic::Sdk::Server.run! source_dir: absolute_path, public_folder: File.join(absolute_path, 'builds', 'web', 'development')
           end
         end
 
