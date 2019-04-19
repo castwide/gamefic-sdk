@@ -48,7 +48,11 @@ module Gamefic
 
       def reset_features
         @@old_features ||= $LOADED_FEATURES.clone
+        @@old_constants ||= Object.constants(false)
         $LOADED_FEATURES.keep_if { |e| @@old_features.include?(e) }
+        Object.constants(false).each do |const|
+          Object.send(:remove_const, const) unless @@old_constants.include?(const)
+        end
         Gamefic::Plot.blocks.clear
       end
 

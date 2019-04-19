@@ -1,3 +1,5 @@
+require 'listen'
+
 module Gamefic
   module Sdk
     module Tasks
@@ -25,14 +27,13 @@ module Gamefic
         #
         def run
           check_for_web_build
-          Dir.chdir absolute_path do
-            # @todo Determine if there's a reasonable way to make the npm build
-            #   watch the filesystem
-            pid = Process.spawn('npm run develop')
-            Process.wait pid
-            # @todo Get the public folder from a config?
-            Gamefic::Sdk::Server.run! source_dir: absolute_path, public_folder: File.join(absolute_path, 'builds', 'web', 'development')
+          build_development
+          listener = Listen.to(File.join(absolute_path, 'web')) do |_mod, _add, _rem|
+            build_development
           end
+          listener.start
+          # @todo Get the public folder from a config?
+          Gamefic::Sdk::Server.run! source_dir: absolute_path, public_folder: File.join(absolute_path, 'builds', 'web', 'development')
         end
 
         # Build a distributable web app using NPM.
@@ -65,6 +66,13 @@ module Gamefic
           puts 'This project does not appear to be configured for web builds.'
           puts 'Try running `rake web:generate` first.' if Rake::Task.task_defined?('web:generate')
           raise LoadError, 'package.json not found'
+        end
+
+        def build_development
+          Dir.chdir absolute_path do
+            pid = Process.spawn('npm run develop')
+            Process.wait pid
+          end
         end
       end
     end
