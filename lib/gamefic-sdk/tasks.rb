@@ -26,7 +26,7 @@ module Gamefic::Sdk::Tasks
       Web.new.run
     end
 
-    define_task 'web:build', 'Build a distributable web app?' do
+    define_task 'web:build', 'Build a distributable web app' do
       Web.new.build
     end
   end
