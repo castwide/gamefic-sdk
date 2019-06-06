@@ -38,5 +38,3 @@ module Gamefic::Sdk::Tasks
     task.add_description desc
   end
 end
-
-Gamefic::Sdk::Tasks.define_all
