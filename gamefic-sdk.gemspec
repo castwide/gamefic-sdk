@@ -18,13 +18,13 @@ Gem::Specification.new do |s|
   s.executables   = ['gamefic']
   s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 2.1.0'
+  s.required_ruby_version = '>= 2.3.0'
 
   s.add_runtime_dependency 'gamefic', '~> 2.0'
   s.add_runtime_dependency 'gamefic-standard', '~> 2.0'
   s.add_runtime_dependency 'gamefic-tty', '~> 2.0'
   s.add_runtime_dependency 'listen', '~> 3.0'
-  s.add_runtime_dependency 'opal', '~> 0.11'
+  s.add_runtime_dependency 'opal', '~> 1.0'
   s.add_runtime_dependency 'sinatra', '~> 2'
   s.add_runtime_dependency 'thor', '~> 0.19', '>= 0.19.4'
 
