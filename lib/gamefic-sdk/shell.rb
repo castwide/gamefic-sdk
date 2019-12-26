@@ -26,31 +26,15 @@ module Gamefic
         graphical data representations. The dataset is provided in JSON
         format.
 
-        The diagram types are rooms, commands, entities, actions, and commands.
+        The diagram types are entities, rooms, actions, verbs, syntaxes, and commands.
       )
       option :directory, type: :string, aliases: :d, desc: 'The project directory', default: '.'
       def diagram type
-        config = Gamefic::Sdk::Config.load(options[:directory])
-        #if config.auto_import?
-        #  Shell.start ['import', '.', '--quiet']
-        #end
-        paths = [config.script_path, config.import_path] + config.library_paths
-        plot = Gamefic::Sdk::DebugPlot.new Gamefic::Plot::Source.new(*paths)
-        plot.script 'main'
+        main = Pathname.new(options[:directory]).join('main.rb').realpath.to_s
+        require_relative main
+        plot = Gamefic::Plot.new
         diagram = Gamefic::Sdk::Diagram.new(plot)
-        if type == 'rooms'
-          puts diagram.rooms.values.to_json
-        elsif type == 'actions'
-          puts plot.action_info.to_json
-        elsif type == 'entities'
-          puts plot.entity_info.to_json
-        elsif type == 'commands'
-          puts({
-            actions: plot.action_info,
-            syntaxes: plot.syntaxes.map{|s| {template: s.template, command: s.command}},
-            verbs: plot.verbs
-          }.to_json)
-        end
+        puts diagram.get(type).to_json
       end
     end
   end

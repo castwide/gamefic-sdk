@@ -24,6 +24,14 @@ module Gamefic
         @plot = plot
       end
 
+      def get type
+        if valid?(type)
+          send(type)
+        else
+          raise ArgumentError, "Unknown diagram type '#{type}'"
+        end
+      end
+
       def verbs
         plot.verbs
       end
@@ -41,7 +49,57 @@ module Gamefic
             position = Position.new(next_x + distance, 0)
           end
         end
-        elements
+        elements.values
+      end
+
+      def entities
+        plot.initial_state[:entities].map do |e|
+          e.transform_keys do |k|
+            str = k.to_s
+            if str.start_with?('@')
+              str[1..-1]
+            else
+              str
+            end
+          end
+        end
+      end
+
+      def actions
+        plot.actions.map do |act|
+          {
+            verb: act.verb,
+            meta: act.meta?,
+            signature: act.signature
+          }
+        end
+      end
+
+      def commands
+        {
+          actions: actions,
+          verbs: verbs,
+          syntaxes: syntaxes
+        }
+      end
+
+      def verbs
+        plot.verbs
+      end
+
+      def syntaxes
+        plot.syntaxes.map do |syn|
+          {
+            template: syn.template,
+            command: syn.command,
+            first_word: syn.first_word,
+            verb: syn.verb
+          }
+        end
+      end
+
+      def valid? type
+        %w[rooms entities actions verbs syntaxes commands].include?(type)
       end
 
       private
