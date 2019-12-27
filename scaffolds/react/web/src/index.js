@@ -11,3 +11,7 @@ render(
 	</Console>,
 	document.getElementById('root')
 );
+
+driver.start().then((state) => {
+	driver.notify(state);
+});

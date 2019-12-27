@@ -36,8 +36,15 @@ module Gamefic
         @@character.state.to_json
       end
 
+      get '/snapshot' do
+        content_type :json
+        @@plot.save.to_json
+      end
+
       post '/restore' do
         content_type :json
+        # The snapshot needs to be received as a JSON string because of issues
+        # with IndifferentHash malforming arrays.
         snapshot = JSON.parse(params['snapshot'], symbolize_names: true)
         @@plot.restore snapshot
         @@character.cue @@plot.default_scene
