@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'listen', '~> 3.0'
   s.add_runtime_dependency 'opal', '~> 1.0'
   s.add_runtime_dependency 'sinatra', '~> 2'
-  s.add_runtime_dependency 'thor', '~> 0.19', '>= 0.19.4'
+  s.add_runtime_dependency 'thor', '~> 1.0'
 
   s.add_development_dependency "bundler", "~> 2.0"
   s.add_development_dependency 'capybara', '~> 3.3'
