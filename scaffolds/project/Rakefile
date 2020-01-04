@@ -3,4 +3,4 @@ require 'gamefic-sdk'
 
 # Add the default Gamefic tasks for building and running games
 # Run `rake --tasks` for a list of commands and descriptions
-require 'gamefic-sdk/tasks'
+Gamefic::Sdk::Tasks.define_all
