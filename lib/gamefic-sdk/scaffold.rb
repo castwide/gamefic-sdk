@@ -2,6 +2,7 @@ require 'fileutils'
 require 'erb'
 require 'pathname'
 require 'securerandom'
+require 'shellwords'
 
 module Gamefic
   module Sdk
@@ -46,6 +47,7 @@ module Gamefic
           end
         end
         map.each_pair { |src, dst| custom_copy src, dst, data }
+        system "bundle install --gemfile=#{Shellwords.escape(File.join(destination, 'Gemfile'))}"
       end
     end
   end
