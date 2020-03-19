@@ -88,18 +88,35 @@ end
 Enter `rake ruby:run` to test the game. Now that it has rooms and objects, you
 can perform in-game commands like `LOOK AROUND`, `GO NORTH`, and `TAKE THE BACKPACK`.
 
-### Running the Game in a Browser
+### Making Games for the Web
 
 The default game project includes tasks for building "web" apps using HTML,
-CSS, and JavaScript. Make a web build with the following commands:
+CSS, and JavaScript. Generate the code for a web build with the following
+command:
 
 ```
 $ rake web:generate
+```
+
+Test the game in a browser by starting a server:
+
+```
+$ rake web:run
+```
+
+Open `http://localhost:4342` to run the game in debug mode.
+
+Build a standalone web game:
+
+```
 $ rake web:build
 ```
 
-The `web:build` task creates the app in your project's `builds/web` directory.
-Open `index.html` in a browser to play the game.
+The game's HTML file and related assets will be generated in the
+`builds/web/production` directory. The SDK uses
+[opal](https://github.com/opal/opal) to compile Ruby code to JavaScript, so the
+web build does not require a Ruby interpreter. Open `index.html` in a browser
+to play the game.
 
 Note: building the web app requires [Node.js](https://nodejs.org).
 
