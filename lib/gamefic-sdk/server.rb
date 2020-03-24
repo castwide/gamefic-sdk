@@ -19,7 +19,7 @@ module Gamefic
         @@character = @@plot.get_player_character
         @@plot.introduce @@character
         @@plot.ready
-        @@character.state.to_json
+        @@character.output.to_json
       end
 
       post '/receive' do
@@ -33,7 +33,7 @@ module Gamefic
         @@plot.update
         @@plot.ready
         # @@character.state.merge(input: params['command'], continued: @@character.queue.any?).to_json
-        @@character.state.to_json
+        @@character.output.to_json
       end
 
       get '/snapshot' do
@@ -50,7 +50,7 @@ module Gamefic
         @@character.cue @@plot.default_scene
         @@plot.update
         @@plot.ready
-        @@character.state.to_json
+        @@character.output.to_json
       end
 
       def reset_features
