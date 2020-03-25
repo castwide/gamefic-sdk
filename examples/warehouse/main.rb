@@ -49,7 +49,7 @@ Gamefic.script do
     queue.push "look desk"
     queue.push "take key"
     queue.push "n"
-    queue.push "unlock crate"
+    queue.push "unlock crate with key"
     queue.push "open crate"
     queue.push "take gold"
   end

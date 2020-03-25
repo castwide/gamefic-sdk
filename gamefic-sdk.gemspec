@@ -14,7 +14,11 @@ Gem::Specification.new do |s|
   s.homepage      = 'http://gamefic.com'
   s.license       = 'MIT'
 
-  s.files = Dir['lib/gamefic-sdk.rb', 'lib/gamefic-tty.rb', 'lib/gamefic-sdk/**/*.rb', 'lib/gamefic-tty/**/*.rb']
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  s.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples|guides)/}) }
+  end
   s.executables   = ['gamefic']
   s.require_paths = ['lib']
 
