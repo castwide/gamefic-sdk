@@ -123,7 +123,7 @@ Note: building the web app requires [Node.js](https://nodejs.org).
 ### Example Projects
 
 The gamefic-sdk repo includes several example projects that provide more
-more complete demonstrations of Gamefic's features. To run an example, copy
+complete demonstrations of Gamefic's features. To run an example, copy
 its `main.rb` file to your own project.
 
 ### Learning More
