@@ -1,6 +1,7 @@
-RSpec.describe 'Examples' do
+RSpec.describe 'Examples (Ruby)' do
   Dir[File.join('examples', '*')].each do |dir|
     next unless File.directory?(dir)
+
     it "runs #{dir} test to conclusion" do
       load File.join(dir, 'main.rb')
       plot = Gamefic::Plot.new

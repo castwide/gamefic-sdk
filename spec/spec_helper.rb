@@ -1,5 +1,6 @@
 require "bundler/setup"
 require 'simplecov'
+require 'capybara/rspec'
 
 SimpleCov.start
 
@@ -16,3 +17,33 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+class TestFileServer < Rack::File
+  attr_writer :root
+
+  def initialize
+    super(nil, {}, 'text/html')
+  end
+
+  def run_test page
+    page.visit '/builds/web/production/index.html'
+    wait_for_class(page, 'CommandForm')
+    form = page.find('.CommandForm')
+    field = form.find_field(type: 'text')
+    field.fill_in with: 'test me'
+    field.native.send_keys :enter
+    wait_for_class(page, 'ConclusionScene')
+  end
+
+  private
+
+  def wait_for_class(page, class_name, timeout = 10)
+    start = Time.now
+    while page.evaluate_script("document.getElementsByClassName('#{class_name}').length == 0")
+      sleep(0.1)
+      raise "TestFileServer timed out waiting for #{class_name}" if Time.now - start > timeout
+    end
+  end
+end
+
+Capybara.app = TestFileServer.new
