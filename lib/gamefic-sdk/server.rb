@@ -32,7 +32,6 @@ module Gamefic
         content_type :json
         @@plot.update
         @@plot.ready
-        # @@character.state.merge(input: params['command'], continued: @@character.queue.any?).to_json
         @@character.output.to_json
       end
 
@@ -45,7 +44,7 @@ module Gamefic
         content_type :json
         # The snapshot needs to be received as a JSON string because of issues
         # with IndifferentHash malforming arrays.
-        snapshot = JSON.parse(params['snapshot'], symbolize_names: true)
+        snapshot = JSON.parse(params['snapshot'])
         @@plot.restore snapshot
         @@character.cue @@plot.default_scene
         @@plot.update
