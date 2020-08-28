@@ -4,16 +4,16 @@ import { Console, Terminal } from 'react-gamefic';
 
 import { driver } from 'driver';
 
-import { ActivityScene, PauseScene, MultipleChoiceScene, ConclusionScene } from './scenes';
+import { Activity, Pause, MultipleChoice, Conclusion } from './scenes';
 import 'react-gamefic/styles/ebook';
 import './style.css';
 
 const sceneComponents = {
-	Activity: ActivityScene,
-	Pause: PauseScene,
-	MultipleChoice: MultipleChoiceScene,
-	YesOrNo: MultipleChoiceScene,
-	Conclusion: ConclusionScene
+	Activity: Activity,
+	Pause: Pause,
+	MultipleChoice: MultipleChoice,
+	YesOrNo: MultipleChoice,
+	Conclusion: Conclusion
 }
 
 render(

@@ -1,11 +1,11 @@
-import { ActivityScene } from './ActivityScene.jsx';
-import { PauseScene } from './PauseScene.jsx';
-import { MultipleChoiceScene } from './MultipleChoiceScene.jsx';
-import { ConclusionScene } from './ConclusionScene.jsx';
+import { Activity } from './Activity.jsx';
+import { Pause } from './Pause.jsx';
+import { MultipleChoice } from './MultipleChoice.jsx';
+import { Conclusion } from './Conclusion.jsx';
 
 export {
-    ActivityScene,
-    PauseScene,
-    MultipleChoiceScene,
-    ConclusionScene
+    Activity,
+    Pause,
+    MultipleChoice,
+    Conclusion
 }
