@@ -6,6 +6,7 @@ RSpec.describe 'Examples (Web)', :type => :feature, :js => true do
     @tmp = Dir.mktmpdir
     Gamefic::Sdk::Scaffold.build 'project', @tmp
     Gamefic::Sdk::Scaffold.build 'react', @tmp
+    `cd #{@tmp} && npm install`
   end
 
   after :all do
@@ -18,7 +19,7 @@ RSpec.describe 'Examples (Web)', :type => :feature, :js => true do
     it "runs #{dir} test in web app to conclusion" do
       FileUtils.copy "#{dir}/main.rb", "#{@tmp}/main.rb", preserve: false
       Dir.chdir @tmp do
-        `cd #{@tmp} && npm install && npm run build`
+        `cd #{@tmp} && npm run build`
       end
       Capybara.app.root = @tmp
       expect { Capybara.app.run_test page }.not_to raise_error
