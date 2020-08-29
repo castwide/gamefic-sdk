@@ -1,5 +1,5 @@
 import React from 'react';
-import { MultipleChoice, ChoiceList } from 'react-gamefic';
+import { MultipleChoiceScene, ChoiceList } from 'react-gamefic';
 
 export class MultipleChoice extends React.Component {
 	render() {

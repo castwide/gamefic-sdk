@@ -1,3 +1,6 @@
+## 2.2.0 - August 29, 2020
+- Update to react-gamefic 0.4.0
+
 ## 2.1.0 - August 27, 2020
 - Update web app with customizable scene components
 
