@@ -41,7 +41,6 @@ module Gamefic
         def build
           check_for_web_build
           Dir.chdir absolute_path do
-            # exec 'npm run build'
             pid = Process.spawn 'npm run build'
             Process.wait pid
           end

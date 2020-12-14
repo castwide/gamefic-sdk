@@ -1,24 +1,26 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = (env) => {
+module.exports = (_env, argv) => {
   var config = {
     entry: path.resolve(__dirname, 'web', 'src', 'index.js'),
     output: {
       filename: 'bundle.js',
-      path: path.resolve(__dirname, "builds", "web", env)
+      path: path.resolve(__dirname, "builds", "web", argv.mode)
     },
     resolve: {
       alias: {
-        driver: path.join(__dirname, 'web', 'src', 'driver', env)
+        driver: path.join(__dirname, 'web', 'src', 'driver', argv.mode)
       }
     },
     plugins: [
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(__dirname, 'web', 'public')
-            },
-        ])
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'web', 'public')
+          }
+        ]
+      })
     ],
     module: {
         rules: [
@@ -45,7 +47,7 @@ module.exports = (env) => {
     }
   }
 
-  if (env == 'production') {
+  if (argv.mode == 'production') {
     config.module.rules.push(
       {
         // opal-webpack-bundler will compile and include ruby files in the pack

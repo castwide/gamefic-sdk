@@ -6,7 +6,9 @@ RSpec.describe 'Examples (Web)', :type => :feature, :js => true do
     @tmp = Dir.mktmpdir
     Gamefic::Sdk::Scaffold.build 'project', @tmp
     Gamefic::Sdk::Scaffold.build 'react', @tmp
-    `cd #{@tmp} && npm install`
+    Dir.chdir @tmp do
+      `cd #{@tmp} && npm install`
+    end
   end
 
   after :all do

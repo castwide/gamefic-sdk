@@ -1,3 +1,6 @@
+## 2.3.0 - December 14, 2020
+- Update package dependencies for web builds
+
 ## 2.2.0 - August 29, 2020
 - Update to react-gamefic 0.4.0
 
