@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'gamefic-standard', '~> 2.0'
   s.add_runtime_dependency 'gamefic-tty', '~> 2.0', '>= 2.0.1'
   s.add_runtime_dependency 'listen', '~> 3.0'
-  s.add_runtime_dependency 'opal', '~> 1.0'
+  s.add_runtime_dependency 'opal', '~> 1.1'
   s.add_runtime_dependency 'sinatra', '~> 2'
   s.add_runtime_dependency 'thor', '~> 1.0'
 
