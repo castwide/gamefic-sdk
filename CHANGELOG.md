@@ -1,3 +1,6 @@
+## 2.3.2
+- Add READMEs to project scaffolds
+
 ## 2.3.1 - March 3, 2021
 - Update opal dependency
 

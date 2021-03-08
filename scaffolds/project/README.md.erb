@@ -1,0 +1,49 @@
+# <%= name %>
+
+A Gamefic game project
+
+## Installation
+
+    $ bundle install
+
+## Running on the Command Line
+
+    $ rake ruby:run
+
+## Building a CLI Game
+
+    $ rake ruby:build
+
+The script will be saved in the `builds/ruby` directory.
+
+## Web-Based Games
+
+The Gamefic SDK also supports web-based versions of games. The project gets built into a single-page application with the Ruby game code compiled into JavaScript.
+
+First you need to install the web project scaffold:
+
+```
+$ rake web:generate
+```
+
+## Running a Web Game
+
+To run the app in debug mode:
+
+```
+$ rake web:run
+```
+
+Open http://localhost:4342 in a browser.
+
+## Building a Web Game
+
+```
+$ rake web:build
+```
+
+The application will be saved in the `builds/web/production` directory.
+
+## More Information
+
+Go to https://gamefic.com for documentation.
