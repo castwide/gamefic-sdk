@@ -1,5 +1,6 @@
 ## 2.3.2
 - Add READMEs to project scaffolds
+- Disable css-loader esModule option in webpack config
 
 ## 2.3.1 - March 3, 2021
 - Update opal dependency

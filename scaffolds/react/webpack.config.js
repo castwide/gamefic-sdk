@@ -23,27 +23,30 @@ module.exports = (_env, argv) => {
       })
     ],
     module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            },
-            {
-              test: /\.(png|jp(e*)g|svg)$/,  
-              use: [{
-                  loader: 'url-loader',
-                  options: { 
-                      limit: 8000, // Convert images < 8kb to base64 strings
-                      name: 'images/[hash]-[name].[ext]'
-                  } 
-              }]
-            },
-            {
-                test: /\.jsx?/,
-                include: path.resolve(__dirname, 'web'),
-                use: 'babel-loader'
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            { loader: 'css-loader', options: { esModule: false } }
+          ]
+        },
+        {
+          test: /\.(png|jp(e*)g|svg)$/,
+          use: [{
+            loader: 'url-loader',
+            options: {
+              limit: 8000, // Convert images < 8kb to base64 strings
+              name: 'images/[hash]-[name].[ext]'
             }
-        ]
+          }]
+        },
+        {
+          test: /\.jsx?/,
+          include: path.resolve(__dirname, 'web'),
+          use: 'babel-loader'
+        }
+      ]
     }
   }
 
