@@ -1,4 +1,4 @@
-## 2.3.2
+## 2.3.2 - March 11, 2021
 - Add READMEs to project scaffolds
 - Disable css-loader esModule option in webpack config
 
