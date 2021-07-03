@@ -47,7 +47,7 @@ module Gamefic
           end
         end
         map.each_pair { |src, dst| custom_copy src, dst, data }
-        system "bundle install --gemfile=#{Shellwords.escape(File.join(destination, 'Gemfile'))}"
+        system "cd #{Shellwords.escape(destination)} && bundle install"
       end
     end
   end

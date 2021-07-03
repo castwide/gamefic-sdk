@@ -1,5 +1,7 @@
 ## 2.3.3 - July 3, 2021
 - Rename READMEs in scaffolds so they get rendered
+- Update gamefic dependency
+- Fix bundle install in scaffold build
 
 ## 2.3.2 - March 11, 2021
 - Add READMEs to project scaffolds
