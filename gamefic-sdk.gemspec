@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'gamefic', '~> 2.0', '>= 2.1.1'
   s.add_runtime_dependency 'gamefic-standard', '~> 2.0'
-  s.add_runtime_dependency 'gamefic-tty', '~> 2.0', '>= 2.0.1'
+  s.add_runtime_dependency 'gamefic-tty', '~> 2.0', '>= 2.0.2'
   s.add_runtime_dependency 'listen', '~> 3.0'
   s.add_runtime_dependency 'opal', '~> 1.1'
   s.add_runtime_dependency 'sinatra', '~> 2'
@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'bundler', '~> 2.0'
   s.add_development_dependency 'capybara', '~> 3.3'
-  s.add_development_dependency 'puma', '~> 3'
+  s.add_development_dependency 'puma', '~> 4'
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'selenium-webdriver', '~> 3.13'
