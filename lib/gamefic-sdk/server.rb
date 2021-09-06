@@ -13,12 +13,7 @@ module Gamefic
 
       post '/start' do
         content_type :json
-        reset_features
-        load File.join(settings.source_dir, 'main.rb')
-        @@plot = Gamefic::Plot.new
-        @@character = @@plot.get_player_character
-        @@plot.introduce @@character
-        @@plot.ready
+        start_plot
         @@character.output.to_json
       end
 
@@ -42,6 +37,7 @@ module Gamefic
 
       post '/restore' do
         content_type :json
+        start_plot
         # The snapshot needs to be received as a JSON string because of issues
         # with IndifferentHash malforming arrays.
         snapshot = JSON.parse(params['snapshot'])
@@ -50,6 +46,15 @@ module Gamefic
         @@plot.update
         @@plot.ready
         @@character.output.to_json
+      end
+
+      def start_plot
+        reset_features
+        load File.join(settings.source_dir, 'main.rb')
+        @@plot = Gamefic::Plot.new
+        @@character = @@plot.get_player_character
+        @@plot.introduce @@character
+        @@plot.ready
       end
 
       def reset_features

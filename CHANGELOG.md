@@ -1,5 +1,7 @@
-## 2.4.0
+## 2.4.0 - September 6, 2021
 - Update dependencies
+- README template formatting
+- Fix /restore in development server
 
 ## 2.3.3 - July 3, 2021
 - Rename READMEs in scaffolds so they get rendered
