@@ -1,4 +1,4 @@
-## 2.4.0 - September 6, 2021
+## 2.4.0 - September 9, 2021
 - Update dependencies
 - README template formatting
 - Fix /restore in development server
