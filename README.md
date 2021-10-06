@@ -74,7 +74,7 @@ require 'gamefic-standard'
 Gamefic.script do
   @living_room = make Room, name: 'living room', description: 'This is your living room.'
   @bedroom = make Room, name: 'bedroom', description: 'This is your bedroom.'
-  @living_room.connect @bedroom, 'north'
+  connect @living_room, @bedroom, 'north'
   @backpack = make Room, name: 'backpack', description: 'Your trusty backpack.', parent: @bedroom
   @book = make Room, name: 'book', description: 'Your favorite novel.', parent: @living_room
 
