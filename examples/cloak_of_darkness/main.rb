@@ -16,38 +16,38 @@ require 'gamefic-standard/test'
 Gamefic.script do
   # The Foyer is where the player starts.
 
-  foyer = make Room, 
-    :name => "Foyer of the Opera House", 
-    :description => "You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers overhead. The entrance from the street is to the north, and there are doorways south and west."
+  foyer = make Room,
+               name: 'Foyer of the Opera House',
+               description: 'You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers overhead. The entrance from the street is to the north, and there are doorways south and west.'
 
   # There's a "fake" door north, which the player can never go through.
 
   frontDoor = make Portal,
-    :name => "north",
-    :description => "The door to the street.",
-    :parent => foyer,
-    :proper_named => true
+                   name: 'north',
+                   description: 'The door to the street.',
+                   parent: foyer,
+                   proper_named: true
 
-  respond :go, Gamefic::Query::Siblings.new(frontDoor) do |actor, dest|
+  respond :go, Gamefic::Query::Siblings.new(frontDoor) do |actor, _dest|
     actor.tell "You've only just arrived, and besides, the weather outside seems to be getting worse."
   end
 
   # The cloakroom is west of the foyer.
 
-  cloakroom = make Room, 
-    :name => "Cloakroom",
-    :description => "The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east."
+  cloakroom = make Room,
+                   name: 'Cloakroom',
+                   description: 'The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east.'
 
-  connect foyer, cloakroom, "west"
+  connect foyer, cloakroom, 'west'
 
-  # In the cloak room there's a hook where we can hang the cloak. 
+  # In the cloak room there's a hook where we can hang the cloak.
   # It doesn't need a new class, it's just a fixture which responds to "put on" and "look".
 
-  hook = make Supporter, 
-    :name => "a small brass hook",
-    :description => "It's just a brass hook.",
-    :parent => cloakroom, 
-    :synonyms => "peg"
+  hook = make Supporter,
+              name: 'a small brass hook',
+              description: "It's just a brass hook.",
+              parent: cloakroom,
+              synonyms: 'peg'
 
   respond :look, Gamefic::Query::Family.new(hook) do |actor, hook|
     if hook.children.empty?
@@ -57,56 +57,56 @@ Gamefic.script do
     end
   end
 
-  interpret "hang :item on :hook", "place :item :hook"
+  interpret 'hang :item on :hook', 'place :item :hook'
 
   # The eponymous Cloak of Darkness: when the player takes it to the bar, everything is dark.
-  # We don't handle wearing it different from carrying it. 
+  # We don't handle wearing it different from carrying it.
 
   cloak = make Item,
-    :name => "a velvet cloak",
-    :description => "A handsome cloak, of velvet trimmed with satin, and slightly splattered with raindrops. Its blackness is so deep that it almost seems to suck light from the room.", 
-    :synonyms => "dark black satin"
+               name: 'a velvet cloak',
+               description: 'A handsome cloak, of velvet trimmed with satin, and slightly splattered with raindrops. Its blackness is so deep that it almost seems to suck light from the room.',
+               synonyms: 'dark black satin'
 
   # Stop the player from dropping the cloak except in the cloak room.
 
-  respond :drop, Gamefic::Query::Children.new(cloak) do |actor, message|
-    if actor.parent != cloakroom then 
-        actor.tell "This isn't the best place to leave a smart cloak lying around."
+  respond :drop, Gamefic::Query::Children.new(cloak) do |actor, _message|
+    if actor.parent != cloakroom
+      actor.tell "This isn't the best place to leave a smart cloak lying around."
     else
       actor.proceed
     end
   end
 
-  # The bar. If the player is wearing the cloak, it's dark and the player can't see a thing. 
+  # The bar. If the player is wearing the cloak, it's dark and the player can't see a thing.
   # Otherwise, the player can see the sawdust on the floor.
 
-  bar = make Room, 
-    :name => "Foyer Bar", 
-    :description => "The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty. There seems to be some sort of message scrawled in the sawdust on the floor."
-  connect foyer, bar, "south"
+  bar = make Room,
+             name: 'Foyer Bar',
+             description: "The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty. There seems to be some sort of message scrawled in the sawdust on the floor."
+  connect foyer, bar, 'south'
 
   # There's a message in the sawdust. If the player does things in the dark, the message is destroyed.
   # We track this using a player.session[:disturbed] boolean.
 
   message = make Scenery,
-    :name => "message",
-    :description => "", # this is handled in a specific respond :look
-    :parent => bar,
-    :synonyms => "scrawl scrawled sawdust dust"
+                 name: 'message',
+                 description: '', # this is handled in a specific respond :look
+                 parent: bar,
+                 synonyms: 'scrawl scrawled sawdust dust'
 
-  respond :look, Gamefic::Query::Siblings.new(message) do |actor, message|
-    if actor.session[:disturbed] then 
+  respond :look, Gamefic::Query::Siblings.new(message) do |actor, _message|
+    if actor.session[:disturbed]
       actor.conclude @you_have_lost
     else
       actor.conclude @you_have_won
     end
   end
 
-  xlate "read :message", "look :message"
+  xlate 'read :message', 'look :message'
 
   # Check if the bar is dark
 
-  validate do |actor, verb, arguments|
+  validate do |actor, verb, _arguments|
     dark = (cloak.parent == actor)
     if actor.room == bar and dark
       if verb == :look
@@ -123,7 +123,7 @@ Gamefic.script do
 
   # Suppress the room output if the bar is dark
 
-  respond :go, Portal do |actor, portal|
+  respond :go, Portal do |actor, _portal|
     buffer = actor.proceed quietly: true
     dark = (cloak.parent == actor)
     if actor.room == bar and dark
@@ -146,23 +146,23 @@ Gamefic.script do
   # Two different endings
 
   @you_have_won = conclusion do |actor|
-    actor.tell "The message, neatly marked in the sawdust, reads..."
-    actor.tell "*** You have won ***"
+    actor.tell 'The message, neatly marked in the sawdust, reads...'
+    actor.tell '*** You have won ***'
   end
 
   @you_have_lost = conclusion do |actor|
-    actor.tell "The message has been carelessly trampled, making it difficult to read. You can just distinguish the words..."
-    actor.tell "*** You have lost ***"
+    actor.tell 'The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...'
+    actor.tell '*** You have lost ***'
   end
 
-  on_test :me do |actor, queue|
-    queue.push "s"
-    queue.push "n"
-    queue.push "w"
-    queue.push "inventory"
-    queue.push "hang cloak on hook"
-    queue.push "e"
-    queue.push "s"
-    queue.push "read message"
+  on_test :me do |_actor, queue|
+    queue.push 's'
+    queue.push 'n'
+    queue.push 'w'
+    queue.push 'inventory'
+    queue.push 'hang cloak on hook'
+    queue.push 'e'
+    queue.push 's'
+    queue.push 'read message'
   end
 end
