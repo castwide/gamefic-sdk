@@ -66,20 +66,6 @@ module Gamefic
         end
         Gamefic::Plot.blocks.clear
       end
-
-      class << self
-        # def run!
-        #   start_browser if settings.browser
-        #   super
-        # end
-
-        # def start_browser
-        #   Thread.new {
-        #     sleep 1 until Server.running?
-        #     `start http://localhost:#{settings.port}`
-        #   }
-        # end
-      end
     end
   end
 end
