@@ -31,9 +31,9 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: false
-    - uses: browser-actions/setup-geckodriver@latest
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+    # - uses: browser-actions/setup-geckodriver@latest
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
     - name: Install dependencies
       run: bundle install
     - name: Run tests
