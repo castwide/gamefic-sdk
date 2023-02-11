@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.executables   = ['gamefic']
   s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 2.3.0'
+  s.required_ruby_version = '>= 2.6.0'
 
   s.add_runtime_dependency 'gamefic', '~> 2.4'
   s.add_runtime_dependency 'gamefic-standard', '~> 2.4'
@@ -37,6 +37,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'puma', '~> 6'
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.0'
-  s.add_development_dependency 'selenium-webdriver', '~> 4.8'
+  s.add_development_dependency 'selenium-webdriver', '~> 4.1'
   s.add_development_dependency 'simplecov', '~> 0.14'
 end
