@@ -1,11 +1,25 @@
-RSpec.describe 'Examples (Web)', :type => :feature, :js => true do
+RSpec.describe 'Examples (Web)', type: :feature, js: true do
+  before :all do
+    @tmp = Dir.mktmpdir
+    Gamefic::Sdk::Scaffold.build 'project', @tmp
+    Gamefic::Sdk::Scaffold.build 'react', @tmp
+    Dir.chdir @tmp do
+      `cd #{@tmp} && npm install`
+    end
+    Capybara.app = Rack::Files.new(@tmp)
+  end
+
+  after :all do
+    FileUtils.remove_entry @tmp
+  end
+
   Dir[File.join('examples', '*')].each do |dir|
     next unless File.directory?(dir)
 
     it "runs #{dir} test in web app to conclusion" do
       FileUtils.copy "#{dir}/main.rb", "#{Capybara.app.root}/main.rb", preserve: false
       Dir.chdir Capybara.app.root do
-        puts `cd #{Capybara.app.root} && npm run build`
+        `cd #{Capybara.app.root} && npm run build`
       end
 
       page.visit '/builds/web/production/index.html'

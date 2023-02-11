@@ -1,7 +1,10 @@
-require "bundler/setup"
+# frozen_literal_string: true
+
+require 'bundler/setup'
 require 'simplecov'
 require 'capybara/rspec'
 require 'fileutils'
+require 'selenium-webdriver'
 require 'tmpdir'
 
 SimpleCov.start
@@ -17,20 +20,6 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
-  end
-
-  config.before(:all) do
-    @tmp = Dir.mktmpdir
-    Gamefic::Sdk::Scaffold.build 'project', @tmp
-    Gamefic::Sdk::Scaffold.build 'react', @tmp
-    Dir.chdir @tmp do
-      `cd #{@tmp} && npm install`
-    end
-    Capybara.app = Rack::Files.new(@tmp)
-  end
-
-  config.after(:all) do
-    FileUtils.remove_entry @tmp
   end
 end
 
