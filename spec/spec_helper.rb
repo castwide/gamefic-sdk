@@ -27,6 +27,7 @@ RSpec.configure do |config|
       `cd #{@tmp} && npm install`
     end
     Capybara.app = Rack::Files.new(@tmp)
+    Capybara.javascript_driver = ENV['CAPYBARA_JAVASCRIPT_DRIVER']&.to_s || :selenium
   end
 
   config.after(:all) do

@@ -38,4 +38,6 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Run tests
+      env:
+        CAPYBARA_JAVASCRIPT_DRIVER: selenium_remote_firefox
       run: bundle exec rspec
