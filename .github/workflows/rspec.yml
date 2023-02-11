@@ -39,5 +39,5 @@ jobs:
       run: bundle install
     - name: Run tests
       env:
-        CAPYBARA_JAVASCRIPT_DRIVER: selenium_remote_firefox
+        CAPYBARA_REMOTE_DRIVER: true
       run: bundle exec rspec

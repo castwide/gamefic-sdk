@@ -5,7 +5,7 @@ RSpec.describe 'Examples (Web)', :type => :feature, :js => true do
     it "runs #{dir} test in web app to conclusion" do
       FileUtils.copy "#{dir}/main.rb", "#{Capybara.app.root}/main.rb", preserve: false
       Dir.chdir Capybara.app.root do
-        puts `cd #{Capybara.app.root} && npm run build`
+        `cd #{Capybara.app.root} && npm run build`
       end
 
       page.visit '/builds/web/production/index.html'

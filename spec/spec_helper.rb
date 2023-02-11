@@ -27,7 +27,13 @@ RSpec.configure do |config|
       `cd #{@tmp} && npm install`
     end
     Capybara.app = Rack::Files.new(@tmp)
-    Capybara.javascript_driver = ENV['CAPYBARA_JAVASCRIPT_DRIVER']&.to_s || :selenium
+    if ENV['CAPYBARA_REMOTE_DRIVER']
+      puts "Registering remote Selenium driver"
+      Capybara.register_driver :selenium_remote_firefox do |app|
+        Capybara::Selenium::Driver.new(app, browser: :remote, url: "http://localhost:4444/wd/hub", desired_capabilities: :firefox)
+      end
+      Capybara.javascript_driver = :selenium_remote_firefox
+    end
   end
 
   config.after(:all) do
