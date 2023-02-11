@@ -1,3 +1,8 @@
+## 2.5.0 - February 11, 2023
+- Update dependencies
+- Improve tests and examples
+- Add RSpec workflow
+
 ## 2.4.0 - September 9, 2021
 - Update dependencies
 - README template formatting
