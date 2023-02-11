@@ -1,4 +1,4 @@
-RSpec.describe 'Examples (Web)', :type => :feature, :js => true do
+RSpec.describe 'Examples (Web)', type: :feature, js: true do
   before :all do
     @tmp = Dir.mktmpdir
     Gamefic::Sdk::Scaffold.build 'project', @tmp
