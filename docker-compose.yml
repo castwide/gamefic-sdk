@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+  selenium:
+    image: selenium/standalone-firefox:latest
+    ports:
+      - 4444:4444
