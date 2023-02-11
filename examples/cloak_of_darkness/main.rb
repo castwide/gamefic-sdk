@@ -8,6 +8,9 @@
 #
 # Version 2.0.0 / 12 July 2014 by Fred Snyder
 # Updated to use new features of Gamefic.
+#
+# Version 3.0.0 / 11 February 2023 by Fred Snyder
+# Improved formatting and new features
 
 require 'gamefic'
 require 'gamefic-standard'
@@ -106,19 +109,21 @@ Gamefic.script do
 
   # Check if the bar is dark
 
-  validate do |actor, verb, _arguments|
+  before_action do |action|
+    actor = action.actor
+    verb = action.verb
+
     dark = (cloak.parent == actor)
     if actor.room == bar and dark
       if verb == :look
         actor.tell "It's too dark in here."
-        next false
+        action.cancel
       elsif verb != :go
         actor.tell "Uh oh, you're wandering around in the dark!"
         actor.session[:disturbed] = true
-        next false
+        action.cancel
       end
     end
-    true
   end
 
   # Suppress the room output if the bar is dark

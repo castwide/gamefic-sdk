@@ -1,6 +1,8 @@
 require "bundler/setup"
 require 'simplecov'
 require 'capybara/rspec'
+require 'fileutils'
+require 'tmpdir'
 
 SimpleCov.start
 
@@ -16,34 +18,32 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-end
 
-class TestFileServer < Rack::File
-  attr_writer :root
-
-  def initialize
-    super(nil, {}, 'text/html')
-  end
-
-  def run_test page
-    page.visit '/builds/web/production/index.html'
-    wait_for_class(page, 'CommandForm')
-    form = page.find('.CommandForm')
-    field = form.find_field(type: 'text')
-    field.fill_in with: 'test me'
-    field.native.send_keys :enter
-    wait_for_class(page, 'ConclusionScene')
-  end
-
-  private
-
-  def wait_for_class(page, class_name, timeout = 10)
-    start = Time.now
-    while page.evaluate_script("document.getElementsByClassName('#{class_name}').length == 0")
-      sleep(0.1)
-      raise "TestFileServer timed out waiting for #{class_name}" if Time.now - start > timeout
+  config.before(:all) do
+    @tmp = Dir.mktmpdir
+    Gamefic::Sdk::Scaffold.build 'project', @tmp
+    Gamefic::Sdk::Scaffold.build 'react', @tmp
+    Dir.chdir @tmp do
+      `cd #{@tmp} && npm install`
     end
+    Capybara.app = Rack::Files.new(@tmp)
+  end
+
+  config.after(:all) do
+    FileUtils.remove_entry @tmp
   end
 end
 
-Capybara.app = TestFileServer.new
+# @todo This is a horrendous hack to keep `Net::OpenTimeout` from raising an error.
+#   See https://groups.google.com/g/ruby-capybara/c/XteY3i5pg1A
+module CapybaraServerHack
+  def responsive?
+    super
+  rescue Net::OpenTimeout
+    false
+  end
+end
+
+class Capybara::Server
+  prepend CapybaraServerHack
+end
