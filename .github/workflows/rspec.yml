@@ -27,17 +27,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: false
-    - name: Run remote Firefox
-      run: docker-compose up -d selenium
+    - name: Set up Geckodriver
+      uses: browser-actions/setup-geckodriver@latest
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      run: geckodriver --version
     - name: Install dependencies
       run: bundle install
     - name: Run tests
-      env:
-        CAPYBARA_REMOTE_DRIVER: true
       run: bundle exec rspec

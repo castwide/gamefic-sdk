@@ -36,11 +36,3 @@ end
 class Capybara::Server
   prepend CapybaraServerHack
 end
-
-if ENV['CAPYBARA_REMOTE_DRIVER']
-  Capybara.register_driver :selenium_remote_firefox do |app|
-    options = Selenium::WebDriver::Firefox::Options.new
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: 'http://127.0.0.1:4444', options: options)
-  end
-  Capybara.javascript_driver = :selenium_remote_firefox
-end
