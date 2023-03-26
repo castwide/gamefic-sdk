@@ -1,11 +1,12 @@
 require 'sinatra/base'
 require 'yaml'
+require 'puma'
 
 module Gamefic
   module Sdk
     class Server < Sinatra::Base
       set :port, 4342
-      set :server, :webrick
+      set :server, :puma
 
       get '/' do
         File.read File.join(settings.public_folder, 'index.html')
@@ -42,9 +43,9 @@ module Gamefic
         # with IndifferentHash malforming arrays.
         snapshot = JSON.parse(params['snapshot'])
         @@plot.restore snapshot
-        @@character.cue @@plot.default_scene
-        @@plot.update
-        @@plot.ready
+        # @@character.cue @@plot.default_scene
+        # @@plot.update
+        # @@plot.ready
         @@character.output.to_json
       end
 
