@@ -5,15 +5,16 @@ RSpec.describe 'Examples (Ruby)' do
     it "runs #{dir} test to conclusion" do
       load File.join(dir, 'main.rb')
       plot = Gamefic::Plot.new
-      char = plot.get_player_character
+      char = plot.make_player_character
       plot.introduce char
+      plot.ready
       char.perform 'test me'
       until char.queue.empty?
-        plot.ready
         plot.update
+        plot.ready
       end
-      expect(char).to be_concluded
       Gamefic::Plot.blocks.pop
+      expect(char).to be_concluding
     end
   end
 end

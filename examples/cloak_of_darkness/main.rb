@@ -31,7 +31,7 @@ Gamefic.script do
                    parent: foyer,
                    proper_named: true
 
-  respond :go, Gamefic::Query::Siblings.new(frontDoor) do |actor, _dest|
+  respond :go, frontDoor do |actor, _dest|
     actor.tell "You've only just arrived, and besides, the weather outside seems to be getting worse."
   end
 
@@ -52,7 +52,7 @@ Gamefic.script do
               parent: cloakroom,
               synonyms: 'peg'
 
-  respond :look, Gamefic::Query::Family.new(hook) do |actor, hook|
+  respond :look, hook do |actor, _hook|
     if hook.children.empty?
       actor.tell "It's just a brass hook, screwed to the wall."
     else
@@ -72,7 +72,7 @@ Gamefic.script do
 
   # Stop the player from dropping the cloak except in the cloak room.
 
-  respond :drop, Gamefic::Query::Children.new(cloak) do |actor, _message|
+  respond :drop, cloak do |actor, _message|
     if actor.parent != cloakroom
       actor.tell "This isn't the best place to leave a smart cloak lying around."
     else
@@ -97,7 +97,7 @@ Gamefic.script do
                  parent: bar,
                  synonyms: 'scrawl scrawled sawdust dust'
 
-  respond :look, Gamefic::Query::Siblings.new(message) do |actor, _message|
+  respond :look, message do |actor, _message|
     if actor.session[:disturbed]
       actor.conclude @you_have_lost
     else
@@ -105,7 +105,7 @@ Gamefic.script do
     end
   end
 
-  xlate 'read :message', 'look :message'
+interpret 'read :message', 'look :message'
 
   # Check if the bar is dark
 
@@ -150,12 +150,12 @@ Gamefic.script do
 
   # Two different endings
 
-  @you_have_won = conclusion do |actor|
+  @you_have_won = conclusion :you_have_one do |actor|
     actor.tell 'The message, neatly marked in the sawdust, reads...'
     actor.tell '*** You have won ***'
   end
 
-  @you_have_lost = conclusion do |actor|
+  @you_have_lost = conclusion :you_have_lost do |actor|
     actor.tell 'The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...'
     actor.tell '*** You have lost ***'
   end

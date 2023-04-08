@@ -31,29 +31,33 @@ Gamefic.script do
   professor = make Character, name: 'the professor', synonyms: 'Sam Worthington',
                               description: 'A gangly older gentleman with thick glasses and a jaunty bowtie.', parent: office
 
-  @talk_to_professor = question 'What do you want to ask him about?' do |actor, data|
-    actor.perform "ask professor about #{data.input}" unless data.input == ''
-    actor.cue default_scene
+  block :talk_to_professor do |scene|
+    scene.on_start do |_actor, props|
+      props.prompt = 'What do you want to ask him about?'
+    end
+
+    scene.on_finish do |actor, props|
+      actor.perform "ask professor about #{props.input}" unless props.input.empty?
+    end
   end
 
-  respond :talk, Use.family(professor) do |actor, _professor|
-    actor.cue @talk_to_professor
+  respond :talk, professor do |actor, _professor|
+    actor.cue :talk_to_professor
   end
 
-  respond :talk, Use.family(professor), Gamefic::Query::Text.new do |actor, professor, subject|
+  respond :talk, professor, plaintext do |actor, professor, subject|
     actor.tell "#{The professor} has nothing to say about #{subject}."
   end
 
-  respond :talk, Use.family(professor), Gamefic::Query::Text.new(/name/) do |actor, _professor, _subject|
+  respond :talk, professor, plaintext(/name/) do |actor, _professor, _subject|
     actor.tell '"Professor Sam Worthington. Pleased to meet you."'
   end
 
-  respond :talk, Use.family(professor),
-          Gamefic::Query::Text.new(/(job|opening|work|interview)/) do |actor, _professor, _subject|
-    actor.conclude @asked_about_job
+  respond :talk, professor, plaintext(/(job|opening|work|interview)/) do |actor, _professor, _subject|
+    actor.conclude :asked_about_job
   end
 
-  @asked_about_job = conclusion do |actor|
+  conclusion :asked_about_job do |actor|
     actor.tell "#{The professor} smiles. \"Ah, you're here about the job.\" He hands you an application. \"Fill this out and get back to me later.\""
   end
 

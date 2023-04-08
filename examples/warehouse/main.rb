@@ -35,11 +35,11 @@ Gamefic.script do
     actor.tell "You are sitting in a small office inside a large warehouse. There's a gold brick somewhere in the stacks. Can you find it?"
   end
 
-  respond :take, Use.family(gold) do |actor, _gold|
-    actor.conclude @found_gold
+  respond :take, gold do |actor, _gold|
+    actor.conclude :found_gold
   end
 
-  @found_gold = conclusion do |actor|
+  conclusion :found_gold do |actor|
     actor.tell 'Congratulations, you got the gold!'
   end
 
