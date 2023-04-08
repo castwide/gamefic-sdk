@@ -99,9 +99,9 @@ Gamefic.script do
 
   respond :look, message do |actor, _message|
     if actor.session[:disturbed]
-      actor.conclude @you_have_lost
+      actor.conclude :you_have_lost
     else
-      actor.conclude @you_have_won
+      actor.conclude :you_have_won
     end
   end
 
@@ -150,12 +150,12 @@ interpret 'read :message', 'look :message'
 
   # Two different endings
 
-  @you_have_won = conclusion :you_have_one do |actor|
+  conclusion :you_have_won do |actor|
     actor.tell 'The message, neatly marked in the sawdust, reads...'
     actor.tell '*** You have won ***'
   end
 
-  @you_have_lost = conclusion :you_have_lost do |actor|
+  conclusion :you_have_lost do |actor|
     actor.tell 'The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...'
     actor.tell '*** You have lost ***'
   end
