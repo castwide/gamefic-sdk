@@ -53,7 +53,7 @@ module Gamefic
         reset_features
         load File.join(settings.source_dir, 'main.rb')
         @@plot = Gamefic::Plot.new
-        @@character = @@plot.get_player_character
+        @@character = @@plot.make_player_character
         @@plot.introduce @@character
         @@plot.ready
       end

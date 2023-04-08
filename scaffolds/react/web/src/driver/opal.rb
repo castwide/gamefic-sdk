@@ -3,5 +3,5 @@ require 'gamefic'
 require 'main'
 
 $plot = Gamefic::Plot.new
-$character = $plot.get_player_character
+$character = $plot.make_player_character
 $plot.introduce $character
