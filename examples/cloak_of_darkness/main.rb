@@ -105,7 +105,7 @@ Gamefic.script do
     end
   end
 
-interpret 'read :message', 'look :message'
+  interpret 'read :message', 'look :message'
 
   # Check if the bar is dark
 
@@ -114,7 +114,7 @@ interpret 'read :message', 'look :message'
     verb = action.verb
 
     dark = (cloak.parent == actor)
-    if actor.room == bar and dark
+    if actor.room == bar && dark
       if verb == :look
         actor.tell "It's too dark in here."
         action.cancel

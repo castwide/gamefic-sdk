@@ -1,4 +1,8 @@
 RSpec.describe 'Examples (Ruby)' do
+  after :each do
+    Gamefic::Plot.blocks.pop
+  end
+
   Dir[File.join('examples', '*')].each do |dir|
     next unless File.directory?(dir)
 
@@ -13,7 +17,6 @@ RSpec.describe 'Examples (Ruby)' do
         plot.update
         plot.ready
       end
-      Gamefic::Plot.blocks.pop
       expect(char).to be_concluding
     end
   end
