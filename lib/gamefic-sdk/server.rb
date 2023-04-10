@@ -32,20 +32,19 @@ module Gamefic
       end
 
       get '/snapshot' do
-        content_type :json
-        @@plot.save.to_json
+        content_type :text
+        snapshot = @@plot.save
+        snapshot
       end
 
       post '/restore' do
         content_type :json
-        start_plot
         # The snapshot needs to be received as a JSON string because of issues
         # with IndifferentHash malforming arrays.
         snapshot = JSON.parse(params['snapshot'])
-        @@plot.restore snapshot
-        # @@character.cue @@plot.default_scene
-        # @@plot.update
-        # @@plot.ready
+        @@plot = Gamefic::Plot.restore snapshot
+        @@character = @@plot.players.first
+        @@plot.ready
         @@character.output.to_json
       end
 
