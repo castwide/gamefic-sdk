@@ -12,15 +12,6 @@ RSpec.describe Gamefic::Sdk::Scaffold do
     end
   end
 
-  it 'adds react to projects' do
-    Dir.mktmpdir do |dir|
-      expect {
-        Gamefic::Sdk::Scaffold.build('project', dir)
-        Gamefic::Sdk::Scaffold.build('react', dir)
-      }.not_to raise_error
-    end
-  end
-
   it 'sets filenames' do
     Dir.mktmpdir do |dir|
       base = File.basename(dir)
