@@ -2,10 +2,8 @@ RSpec.describe 'Examples (Web)', type: :feature, js: true do
   before :all do
     @tmp = Dir.mktmpdir
     Gamefic::Sdk::Scaffold.build 'project', @tmp
-    # Gamefic::Sdk::Scaffold.build 'react', @tmp
     Dir.chdir @tmp do
       Gamefic::Sdk::Tasks::Web.new.generate
-      # `cd #{@tmp} && npm install`
     end
     Capybara.app = Rack::Files.new(File.join(@tmp))
   end
