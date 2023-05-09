@@ -22,11 +22,11 @@ RSpec.describe 'Examples (Web)', type: :feature, js: true do
       end
 
       page.visit '/web/build/index.html'
-      expect(page).to have_selector('input[type=text]')
+      expect(page).to have_css('input[type=text]')
       field = page.find('input[type=text]')
       field.fill_in with: 'test me'
       field.native.send_keys :enter
-      # @todo Figure out a way to verify the game concluded
+      expect(page).to have_css('div[data-scene-type=Conclusion]', visible: false)
     end
   end
 end
