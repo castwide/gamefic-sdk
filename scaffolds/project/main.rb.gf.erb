@@ -2,8 +2,12 @@ GAMEFIC_UUID = '<%= SecureRandom.uuid %>'
 require 'gamefic'
 require 'gamefic-standard'
 
-Gamefic.script do
-  introduction do |actor|
-    actor.tell "Hello, world!"
+class Plot < Gamefic::Plot
+  include Gamefic::Standard
+
+  script do
+    introduction do |actor|
+      actor.tell "Hello, world!"
+    end
   end
 end

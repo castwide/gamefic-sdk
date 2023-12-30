@@ -17,7 +17,7 @@ module Gamefic
           FileUtils.mkdir_p web_path
           Dir.chdir web_path do
             name = File.basename(absolute_path)
-            system 'npx', 'react-gamefic', '--name', name
+            system 'npx', 'react-gamefic', '--name', name, '--class', config[:plot_class]
             puts 'The web app is ready.'
             puts 'Run `rake web:run` to start the app in dev mode.'
           end

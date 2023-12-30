@@ -16,7 +16,7 @@ module Gamefic
         #
         def run
           require_relative File.join(absolute_path, 'main')
-          Gamefic::Tty::Engine.run
+          Gamefic::Tty::Engine.run(plot: plot_class.new)
         end
 
         # Build a distributable Ruby app.
@@ -89,7 +89,7 @@ Dir.mktmpdir do |tmp|
   require 'gamefic-tty'
   require 'main'
   puts "\n"
-  Gamefic::Tty::Engine.run
+  Gamefic::Tty::Engine.run(plot: #{plot_class}.new)
 end
 )
         end
