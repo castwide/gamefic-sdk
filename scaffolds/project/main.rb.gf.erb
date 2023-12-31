@@ -1,8 +1,11 @@
-GAMEFIC_UUID = '<%= SecureRandom.uuid %>'
+# frozen_string_literal: true
+
 require 'gamefic'
 require 'gamefic-standard'
 
 class Plot < Gamefic::Plot
+  UUID = '<%= SecureRandom.uuid %>'
+
   include Gamefic::Standard
 
   script do
