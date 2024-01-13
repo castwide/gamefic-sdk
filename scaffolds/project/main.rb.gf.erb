@@ -1,16 +1,8 @@
 # frozen_string_literal: true
 
-require 'gamefic'
-require 'gamefic-standard'
+$LOAD_PATH.unshift File.join(__dir__, 'lib')
 
-class Plot < Gamefic::Plot
-  UUID = '<%= SecureRandom.uuid %>'
+require '<%= name %>'
 
-  include Gamefic::Standard
-
-  script do
-    introduction do |actor|
-      actor.tell "Hello, world!"
-    end
-  end
-end
+# The Gamefic SDK uses this constant to select the main Plot for game engines.
+GAMEFIC_PLOT_CLASS = <%= camelcase(name) %>::Plot

@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+module <%= camelcase(name) %>
+  # The main plot.
+  #
+  class Plot < Gamefic::Plot
+    UUID = 'fe5d62a7-7036-45c0-b5cb-39c336bf1b5a'
+
+    include Gamefic::Standard
+
+    script do
+      introduction do |actor|
+        actor.tell "Hello, world!"
+      end
+    end
+  end
+end
