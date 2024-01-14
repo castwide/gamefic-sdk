@@ -4,6 +4,8 @@
 - Queries use proxies for static entities
 - All scripted blocks get evaluated on stage
 - Use create-react-gamefic for web scaffolds
+- Modular projects and libraries
+- New project scaffold
 
 ## 2.5.0 - February 11, 2023
 - Update dependencies

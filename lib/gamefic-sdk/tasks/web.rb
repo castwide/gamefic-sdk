@@ -11,8 +11,7 @@ module Gamefic
         # Generate a web app using NPM.
         #
         def generate
-          nv = `npm -v`.strip
-          puts "Node version #{nv} detected. Preparing the web app..."
+          puts "Node version #{check_for_npm} detected. Preparing the web app..."
           web_path = File.join(absolute_path, 'web')
           FileUtils.mkdir_p web_path
           Dir.chdir web_path do
@@ -21,9 +20,6 @@ module Gamefic
             puts 'The web app is ready.'
             puts 'Run `rake web:run` to start the app in dev mode.'
           end
-        rescue Errno::ENOENT => e
-          STDERR.puts "#{e.class}: #{e.message}"
-          STDERR.puts "Web app generation requires Node (https://nodejs.org)."
         end
 
         # Run the web app in a server.
@@ -43,8 +39,8 @@ module Gamefic
             system 'npm run build'
           end
         rescue Errno::ENOENT => e
-          STDERR.puts "#{e.class}: #{e.message}"
-          STDERR.puts "Web app building requires Node (https://nodejs.org)."
+          warn "#{e.class}: #{e.message}"
+          warn 'Web app building requires Node (https://nodejs.org).'
         end
 
         private
@@ -62,9 +58,18 @@ module Gamefic
         # @return [void]
         def check_for_web_build
           return if web_build_exists?
+
           puts 'This project does not appear to be configured for web builds.'
           puts 'Try running `rake web:generate` first.' if Rake::Task.task_defined?('web:generate')
           raise LoadError, 'package.json not found'
+        end
+
+        def check_for_npm
+          `npm -v`.strip
+        rescue Errno::ENOENT => e
+          warn "#{e.class}: #{e.message}"
+          warn 'Web app generation requires Node (https://nodejs.org).'
+          raise
         end
       end
     end
