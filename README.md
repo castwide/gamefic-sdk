@@ -117,7 +117,7 @@ Test the game in a browser by starting a server:
 $ rake web:run
 ```
 
-Open `http://localhost:4342` to run the game in debug mode.
+Open `http://localhost:9000` to run the game in debug mode.
 
 Build a standalone web game:
 
