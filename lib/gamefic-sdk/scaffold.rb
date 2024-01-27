@@ -31,7 +31,7 @@ module Gamefic
 
       def custom_copy origin, destination, data
         FileUtils.mkdir_p File.dirname(destination)
-        if rename.end_with?('.gf.erb')
+        if origin.end_with?('.gf.erb')
           File.write destination[0..-8], render(origin, data)
         else
           FileUtils.cp_r origin, destination
@@ -47,7 +47,7 @@ module Gamefic
         files = Dir.glob(File.join(dir, '**', '*'), File::FNM_DOTMATCH).select { |entry| File.file?(entry) }
         map = {}
         files.each do |file|
-          rename = File.join(File.dirname(file), File.basename(file).gsub('__name__', data.name))
+          rename = File.join(File.dirname(file), File.basename(file)).gsub('__name__', data.name)
           dst = File.join(destination, rename[dir.length..-1])
           raise "Gamefic generation would overwrite existing file #{rename}" if File.file?(dst)
 

@@ -14,9 +14,14 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-require 'gamefic-standard/test'
 
-Gamefic.script do
+module CloakOfDarkness
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+  end
+end
+
+CloakOfDarkness::Plot.script do
   # The Foyer is where the player starts.
 
   foyer = make Room,
@@ -129,9 +134,9 @@ Gamefic.script do
   # Suppress the room output if the bar is dark
 
   respond :go, Portal do |actor, _portal|
-    buffer = actor.proceed quietly: true
+    buffer = actor.buffer { actor.proceed }
     dark = (cloak.parent == actor)
-    if actor.room == bar and dark
+    if actor.room == bar && dark
       actor.tell "It's too dark in here."
     else
       actor.tell buffer
@@ -160,14 +165,16 @@ Gamefic.script do
     actor.tell '*** You have lost ***'
   end
 
-  on_test :me do |_actor, queue|
-    queue.push 's'
-    queue.push 'n'
-    queue.push 'w'
-    queue.push 'inventory'
-    queue.push 'hang cloak on hook'
-    queue.push 'e'
-    queue.push 's'
-    queue.push 'read message'
+  meta :test, 'me' do |actor|
+    actor.queue.concat [
+      's',
+      'n',
+      'w',
+      'inventory',
+      'hang cloak on hook',
+      'e',
+      's',
+      'read message'
+    ]
   end
 end

@@ -6,9 +6,14 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-require 'gamefic-standard/test'
 
-Gamefic.script do
+module Professor
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+  end
+end
+
+Professor::Plot.script do
   office = make Room, name: 'the professor\'s office',
                       description: 'A cozy room with thick carpet, rich mahogany woodwork, and lots of books.'
 
@@ -61,11 +66,13 @@ Gamefic.script do
     actor.tell "#{The professor} smiles. \"Ah, you're here about the job.\" He hands you an application. \"Fill this out and get back to me later.\""
   end
 
-  on_test :me do |_actor, queue|
-    queue.push 'look around'
-    queue.push 'look professor'
-    queue.push 'talk to professor'
-    queue.push 'name'
-    queue.push 'ask professor about job'
+  meta :test, 'me' do |actor|
+    actor.queue.concat [
+      'look around',
+      'look professor',
+      'talk to professor',
+      'name',
+      'ask professor about job'
+    ]
   end
 end

@@ -6,9 +6,14 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-require 'gamefic-standard/test'
 
-Gamefic.script do
+module Warehouse
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+  end
+end
+
+Warehouse::Plot.script do
   office = make Room, name: 'the manager\'s office', description: 'A small office in the back of the warehouse.'
 
   desk = make Supporter, name: 'a desk', description: 'A plain wooden desk.', parent: office
@@ -43,14 +48,16 @@ Gamefic.script do
     actor.tell 'Congratulations, you got the gold!'
   end
 
-  on_test :me do |_actor, queue|
-    queue.push 'look around'
-    queue.push 'get off chair'
-    queue.push 'look desk'
-    queue.push 'take key'
-    queue.push 'n'
-    queue.push 'unlock crate with key'
-    queue.push 'open crate'
-    queue.push 'take gold'
+  meta :test, 'me' do |actor|
+    actor.queue.concat [
+      'look around',
+      'get off chair',
+      'look desk',
+      'take key',
+      'n',
+      'unlock crate with key',
+      'open crate',
+      'take gold'
+    ]
   end
 end

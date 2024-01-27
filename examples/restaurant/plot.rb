@@ -4,9 +4,14 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-require 'gamefic-standard/test'
 
-Gamefic.script do
+module Restaurant
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+  end
+end
+
+Restaurant::Plot.script do
   lobby = make Room, name: 'the lobby',
                      description: 'An alcove that opens into the dining area to the north. The exit is south.'
 
@@ -90,16 +95,18 @@ Gamefic.script do
     actor.tell 'You walk home satisfied.'
   end
 
-  on_test :me do |_actor, queue|
-    queue.push 'n'
-    queue.push 'nw'
-    queue.push 'eat dinner'
-    queue.push 'se'
-    queue.push 's'
-    queue.push 'w'
-    queue.push 'take jacket'
-    queue.push 'wear jacket'
-    queue.push 'e'
-    queue.push 's'
+  meta :test, 'me' do |actor|
+    actor.queue.concat [
+      'n',
+      'nw',
+      'eat dinner',
+      'se',
+      's',
+      'w',
+      'take jacket',
+      'wear jacket',
+      'e',
+      's'
+    ]
   end
 end
