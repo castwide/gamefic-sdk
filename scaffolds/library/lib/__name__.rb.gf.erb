@@ -1,0 +1,10 @@
+require 'gamefic'
+require 'gamefic-standard'
+require '<%= name %>/version'
+
+module %<= camelcase(name) %>
+  extend Gamefic::Scriptable
+  include Gamefic::Standard
+
+  # Game code goes here
+end

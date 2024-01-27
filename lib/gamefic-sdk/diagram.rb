@@ -3,6 +3,8 @@ require 'json'
 module Gamefic
   module Sdk
     class Diagram
+      DIAGRAMMABLE = %w[entities responses verbs syntaxes commands scenes].freeze
+
       class Position
         attr_accessor :x, :y
 
@@ -53,31 +55,28 @@ module Gamefic
       end
 
       def entities
-        plot.initial_state[:entities].map do |e|
-          e.transform_keys do |k|
-            str = k.to_s
-            if str.start_with?('@')
-              str[1..-1]
-            else
-              str
-            end
-          end
+        plot.entities.map do |ent|
+          {
+            name: ent.name,
+            type: ent.class,
+            parent: ent.parent&.name
+          }
         end
       end
 
-      def actions
-        plot.actions.map do |act|
+      def responses
+        plot.playbook.responses.map do |act|
           {
             verb: act.verb,
             meta: act.meta?,
-            signature: act.signature
+            # signature: act.signature
           }
         end
       end
 
       def commands
         {
-          actions: actions,
+          responses: responses,
           verbs: verbs,
           syntaxes: syntaxes
         }
@@ -92,14 +91,23 @@ module Gamefic
           {
             template: syn.template,
             command: syn.command,
-            first_word: syn.first_word,
+            synonym: syn.synonym,
             verb: syn.verb
           }
         end
       end
 
+      def scenes
+        plot.scenebook.scenes.map do |scene|
+          {
+            name: scene.name,
+            type: scene.type
+          }
+        end
+      end
+
       def valid? type
-        %w[rooms entities actions verbs syntaxes commands].include?(type)
+        DIAGRAMMABLE.include?(type)
       end
 
       private

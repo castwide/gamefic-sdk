@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+module <%= camelcase(name) %>
+  # The base subplot.
+  #
+  # Authors should extend subclasses to create subplots that the plot can
+  # branch.
+  #
+  class Subplot < Gamefic::Subplot
+    include Gamefic::Standard.no_scripts
+  end
+end

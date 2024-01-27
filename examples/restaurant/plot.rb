@@ -4,9 +4,14 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-require 'gamefic-standard/test'
 
-Gamefic.script do
+module Restaurant
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+  end
+end
+
+Restaurant::Plot.script do
   lobby = make Room, name: 'the lobby',
                      description: 'An alcove that opens into the dining area to the north. The exit is south.'
 
@@ -38,20 +43,20 @@ Gamefic.script do
 
   door = make Portal, name: 'south', parent: lobby, proper_named: true
 
-  respond :go, Gamefic::Query::Siblings.new(door) do |actor, _door|
+  respond :go, siblings(door) do |actor, _door|
     # If the player has eaten the chicken, its parent will be nil.
     if !chicken.parent.nil?
       actor.tell "You can't leave the restaurant yet. You're still hungry!"
     # Just for extra fun, we'll script the player to put on the jacket before
     # leaving.
     elsif jacket.parent == actor && jacket.attached?
-      actor.conclude @finished
+      actor.conclude :finished
     else
       actor.tell "Hmm... it looks a little cold out there. You're not dressed for it right now."
     end
   end
 
-  respond :wear, jacket do |actor, jacket|
+  respond :wear, jacket do |actor, _jacket|
     if jacket.parent == actor && jacket.attached?
       actor.tell "You're already wearing the jacket."
     else
@@ -76,7 +81,7 @@ Gamefic.script do
   interpret 'take off :clothing', 'doff :clothing'
   interpret 'take :clothing off', 'doff :clothing'
 
-  respond :drop, Use.children(jacket) do |actor, jacket|
+  respond :drop, children(jacket) do |actor, jacket|
     jacket.attached = false
     actor.proceed
   end
@@ -86,20 +91,22 @@ Gamefic.script do
     chicken.parent = nil
   end
 
-  @finished = conclusion do |actor|
+  conclusion :finished do |actor|
     actor.tell 'You walk home satisfied.'
   end
 
-  on_test :me do |_actor, queue|
-    queue.push 'n'
-    queue.push 'nw'
-    queue.push 'eat dinner'
-    queue.push 'se'
-    queue.push 's'
-    queue.push 'w'
-    queue.push 'take jacket'
-    queue.push 'wear jacket'
-    queue.push 'e'
-    queue.push 's'
+  meta :test, 'me' do |actor|
+    actor.queue.concat [
+      'n',
+      'nw',
+      'eat dinner',
+      'se',
+      's',
+      'w',
+      'take jacket',
+      'wear jacket',
+      'e',
+      's'
+    ]
   end
 end

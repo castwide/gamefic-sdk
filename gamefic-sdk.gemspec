@@ -24,17 +24,17 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.7.0'
 
-  s.add_runtime_dependency 'gamefic', '~> 2.4'
-  s.add_runtime_dependency 'gamefic-standard', '~> 2.4'
-  s.add_runtime_dependency 'gamefic-tty', '~> 2.0', '>= 2.0.2'
+  s.add_runtime_dependency 'gamefic', '~> 3.0'
+  s.add_runtime_dependency 'gamefic-standard', '~> 3.0'
+  s.add_runtime_dependency 'gamefic-tty', '~> 3.0'
   s.add_runtime_dependency 'listen', '~> 3.0'
   s.add_runtime_dependency 'opal', '~> 1.1'
+  s.add_runtime_dependency 'puma', '~> 6'
   s.add_runtime_dependency 'sinatra', '~> 2'
   s.add_runtime_dependency 'thor', '~> 1.0'
 
   s.add_development_dependency 'bundler', '~> 2.0'
   s.add_development_dependency 'capybara', '~> 3.3'
-  s.add_development_dependency 'puma', '~> 6'
   s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'selenium-webdriver', '~> 4.2'

@@ -1,3 +1,12 @@
+## 3.0.0 - January 27, 2024
+- Deprecate broken/redundant commands
+- Improved serialization
+- Queries use proxies for static entities
+- All scripted blocks get evaluated on stage
+- Use create-react-gamefic for web scaffolds
+- Modular projects and libraries
+- New project scaffold
+
 ## 2.5.0 - February 11, 2023
 - Update dependencies
 - Improve tests and examples

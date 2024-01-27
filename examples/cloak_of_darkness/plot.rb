@@ -14,9 +14,14 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-require 'gamefic-standard/test'
 
-Gamefic.script do
+module CloakOfDarkness
+  class Plot < Gamefic::Plot
+    include Gamefic::Standard
+  end
+end
+
+CloakOfDarkness::Plot.script do
   # The Foyer is where the player starts.
 
   foyer = make Room,
@@ -31,7 +36,7 @@ Gamefic.script do
                    parent: foyer,
                    proper_named: true
 
-  respond :go, Gamefic::Query::Siblings.new(frontDoor) do |actor, _dest|
+  respond :go, frontDoor do |actor, _dest|
     actor.tell "You've only just arrived, and besides, the weather outside seems to be getting worse."
   end
 
@@ -52,7 +57,7 @@ Gamefic.script do
               parent: cloakroom,
               synonyms: 'peg'
 
-  respond :look, Gamefic::Query::Family.new(hook) do |actor, hook|
+  respond :look, hook do |actor, _hook|
     if hook.children.empty?
       actor.tell "It's just a brass hook, screwed to the wall."
     else
@@ -72,7 +77,7 @@ Gamefic.script do
 
   # Stop the player from dropping the cloak except in the cloak room.
 
-  respond :drop, Gamefic::Query::Children.new(cloak) do |actor, _message|
+  respond :drop, cloak do |actor, _message|
     if actor.parent != cloakroom
       actor.tell "This isn't the best place to leave a smart cloak lying around."
     else
@@ -97,15 +102,15 @@ Gamefic.script do
                  parent: bar,
                  synonyms: 'scrawl scrawled sawdust dust'
 
-  respond :look, Gamefic::Query::Siblings.new(message) do |actor, _message|
+  respond :look, message do |actor, _message|
     if actor.session[:disturbed]
-      actor.conclude @you_have_lost
+      actor.conclude :you_have_lost
     else
-      actor.conclude @you_have_won
+      actor.conclude :you_have_won
     end
   end
 
-  xlate 'read :message', 'look :message'
+  interpret 'read :message', 'look :message'
 
   # Check if the bar is dark
 
@@ -114,7 +119,7 @@ Gamefic.script do
     verb = action.verb
 
     dark = (cloak.parent == actor)
-    if actor.room == bar and dark
+    if actor.room == bar && dark
       if verb == :look
         actor.tell "It's too dark in here."
         action.cancel
@@ -129,9 +134,9 @@ Gamefic.script do
   # Suppress the room output if the bar is dark
 
   respond :go, Portal do |actor, _portal|
-    buffer = actor.proceed quietly: true
+    buffer = actor.buffer { actor.proceed }
     dark = (cloak.parent == actor)
-    if actor.room == bar and dark
+    if actor.room == bar && dark
       actor.tell "It's too dark in here."
     else
       actor.tell buffer
@@ -150,24 +155,26 @@ Gamefic.script do
 
   # Two different endings
 
-  @you_have_won = conclusion do |actor|
+  conclusion :you_have_won do |actor|
     actor.tell 'The message, neatly marked in the sawdust, reads...'
     actor.tell '*** You have won ***'
   end
 
-  @you_have_lost = conclusion do |actor|
+  conclusion :you_have_lost do |actor|
     actor.tell 'The message has been carelessly trampled, making it difficult to read. You can just distinguish the words...'
     actor.tell '*** You have lost ***'
   end
 
-  on_test :me do |_actor, queue|
-    queue.push 's'
-    queue.push 'n'
-    queue.push 'w'
-    queue.push 'inventory'
-    queue.push 'hang cloak on hook'
-    queue.push 'e'
-    queue.push 's'
-    queue.push 'read message'
+  meta :test, 'me' do |actor|
+    actor.queue.concat [
+      's',
+      'n',
+      'w',
+      'inventory',
+      'hang cloak on hook',
+      'e',
+      's',
+      'read message'
+    ]
   end
 end

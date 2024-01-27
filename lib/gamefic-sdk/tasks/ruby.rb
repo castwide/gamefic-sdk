@@ -16,7 +16,7 @@ module Gamefic
         #
         def run
           require_relative File.join(absolute_path, 'main')
-          Gamefic::Tty::Engine.run
+          Gamefic::Tty::Engine.run(plot: plot_class.new)
         end
 
         # Build a distributable Ruby app.
@@ -36,8 +36,8 @@ module Gamefic
             files[rel] = Base64.encode64(Zlib::Deflate.deflate(File.read(full)))
           end
           program = program_code(files)
-          FileUtils.mkdir_p File.join(absolute_path, 'builds', 'ruby')
-          File.write(File.join(absolute_path, 'builds', 'ruby', "#{File.basename(absolute_path)}.rb"), program)
+          FileUtils.mkdir_p File.join(absolute_path, 'ruby', 'build')
+          File.write(File.join(absolute_path, 'ruby', 'build', "#{File.basename(absolute_path)}.rb"), program)
         end
 
         private
@@ -89,7 +89,7 @@ Dir.mktmpdir do |tmp|
   require 'gamefic-tty'
   require 'main'
   puts "\n"
-  Gamefic::Tty::Engine.run
+  Gamefic::Tty::Engine.run(plot: #{plot_class}.new)
 end
 )
         end

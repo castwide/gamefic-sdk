@@ -11,42 +11,36 @@ module Gamefic
         # Generate a web app using NPM.
         #
         def generate
-          Dir.chdir absolute_path do
-            nv = `npm -v`.strip
-            puts "Node version #{nv} detected. Preparing the web app..."
-            Gamefic::Sdk::Scaffold.build 'react', '.'
-            puts 'The web app scaffold is ready.'
-            puts 'Run `npm install` to download the dependencies.'
+          puts "Node version #{check_for_npm} detected. Preparing the web app..."
+          web_path = File.join(absolute_path, 'web')
+          FileUtils.mkdir_p web_path
+          Dir.chdir web_path do
+            name = File.basename(absolute_path)
+            system 'npx', 'react-gamefic', '--name', name, '--class', 'GAMEFIC_PLOT_CLASS'
+            puts 'The web app is ready.'
+            puts 'Run `rake web:run` to start the app in dev mode.'
           end
-        rescue Errno::ENOENT => e
-          STDERR.puts "#{e.class}: #{e.message}"
-          STDERR.puts "Web app generation requires Node (https://nodejs.org)."
         end
 
         # Run the web app in a server.
         #
         def run
           check_for_web_build
-          build_development
-          listener = Listen.to(File.join(absolute_path, 'web')) do |_mod, _add, _rem|
-            build_development
+          Dir.chdir File.join(absolute_path, 'web') do
+            system 'npm start'
           end
-          listener.start
-          # @todo Get the public folder from a config?
-          Gamefic::Sdk::Server.run! source_dir: absolute_path, public_folder: File.join(absolute_path, 'builds', 'web', 'development')
         end
 
         # Build a distributable web app using NPM.
         #
         def build
           check_for_web_build
-          Dir.chdir absolute_path do
-            pid = Process.spawn 'npm run build'
-            Process.wait pid
+          Dir.chdir File.join(absolute_path, 'web') do
+            system 'npm run build'
           end
         rescue Errno::ENOENT => e
-          STDERR.puts "#{e.class}: #{e.message}"
-          STDERR.puts "Web app building requires Node (https://nodejs.org)."
+          warn "#{e.class}: #{e.message}"
+          warn 'Web app building requires Node (https://nodejs.org).'
         end
 
         private
@@ -55,7 +49,7 @@ module Gamefic
         #
         # @return [Boolean]
         def web_build_exists?
-          File.exist?(File.join(absolute_path, 'package.json'))
+          File.exist?(File.join(absolute_path, 'web', 'package.json'))
         end
 
         # Check if a web build exists.
@@ -64,16 +58,18 @@ module Gamefic
         # @return [void]
         def check_for_web_build
           return if web_build_exists?
+
           puts 'This project does not appear to be configured for web builds.'
           puts 'Try running `rake web:generate` first.' if Rake::Task.task_defined?('web:generate')
           raise LoadError, 'package.json not found'
         end
 
-        def build_development
-          Dir.chdir absolute_path do
-            pid = Process.spawn('npm run develop')
-            Process.wait pid
-          end
+        def check_for_npm
+          `npm -v`.strip
+        rescue Errno::ENOENT => e
+          warn "#{e.class}: #{e.message}"
+          warn 'Web app generation requires Node (https://nodejs.org).'
+          raise
         end
       end
     end

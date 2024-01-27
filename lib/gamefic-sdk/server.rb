@@ -1,11 +1,12 @@
 require 'sinatra/base'
 require 'yaml'
+require 'puma'
 
 module Gamefic
   module Sdk
     class Server < Sinatra::Base
       set :port, 4342
-      set :server, :webrick
+      set :server, :puma
 
       get '/' do
         File.read File.join(settings.public_folder, 'index.html')
@@ -31,19 +32,18 @@ module Gamefic
       end
 
       get '/snapshot' do
-        content_type :json
-        @@plot.save.to_json
+        content_type :text
+        snapshot = @@plot.save
+        snapshot
       end
 
       post '/restore' do
         content_type :json
-        start_plot
         # The snapshot needs to be received as a JSON string because of issues
         # with IndifferentHash malforming arrays.
         snapshot = JSON.parse(params['snapshot'])
-        @@plot.restore snapshot
-        @@character.cue @@plot.default_scene
-        @@plot.update
+        @@plot = Gamefic::Plot.restore snapshot
+        @@character = @@plot.players.first
         @@plot.ready
         @@character.output.to_json
       end
@@ -52,7 +52,7 @@ module Gamefic
         reset_features
         load File.join(settings.source_dir, 'main.rb')
         @@plot = Gamefic::Plot.new
-        @@character = @@plot.get_player_character
+        @@character = @@plot.make_player_character
         @@plot.introduce @@character
         @@plot.ready
       end

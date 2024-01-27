@@ -7,7 +7,7 @@ RSpec.describe Gamefic::Sdk::Tasks::Web do
       Gamefic::Sdk::Scaffold.build('project', dir)
       tasks = Gamefic::Sdk::Tasks::Web.new(dir)
       tasks.generate
-      expect(File.exist?(File.join(dir, 'package.json'))).to be(true)
+      expect(File.exist?(File.join(dir, 'web', 'package.json'))).to be(true)
     end
   end
 
@@ -35,10 +35,9 @@ RSpec.describe Gamefic::Sdk::Tasks::Web do
         Gamefic::Sdk::Scaffold.build('project', dir)
         tasks = Gamefic::Sdk::Tasks::Web.new(dir)
         tasks.generate
-        `npm install`
         tasks.build
-        expect(File.exist?(File.join(dir, 'builds', 'web', 'production', 'index.html'))).to be(true)
-        expect(File.exist?(File.join(dir, 'builds', 'web', 'production', 'bundle.js'))).to be(true)
+        expect(File.exist?(File.join(dir, 'web', 'build', 'index.html'))).to be(true)
+        expect(File.exist?(File.join(dir, 'web', 'build', 'bundle.js'))).to be(true)
       end
     end
   end

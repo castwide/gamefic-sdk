@@ -33,6 +33,7 @@ module Gamefic::Sdk::Tasks
 
   def define_task name, desc, &block
     return if Rake::Task.task_defined?(name)
+
     # @type [Rake::Task]
     task = Rake::Task.define_task(name, &block)
     task.add_description desc
