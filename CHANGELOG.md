@@ -1,4 +1,4 @@
-## 3.0.0
+## 3.0.0 - January 27, 2024
 - Deprecate broken/redundant commands
 - Improved serialization
 - Queries use proxies for static entities
