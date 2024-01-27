@@ -37,21 +37,26 @@ so there's not much to do yet. Enter `QUIT` to exit the game.
 
 ### The Script Code
 
-The main script for your narrative is `main.rb` in your project's root
-directory. It should look something like this:
+The plot for your narrative is defined in the `plot.rb` file. It should look
+something like this:
 
 ```ruby
-GAMEFIC_UUID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-require 'gamefic-standard'
+module Example
+  class Plot < Gamefic::Plot
+    UUID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 
-Gamefic.script do
-  introduction do |actor|
-    actor.tell "Hello, world!"
+    include Gamefic::Standard
+
+    script do
+      introduction do |actor|
+        actor.tell "Hello, world!"
+      end
+    end
   end
 end
 ```
 
-`GAMEFIC_UUID` is a globally unique identifier. It can be useful if you want to
+`UUID` is a globally unique identifier. It can be useful if you want to
 add your game to online catalogs, such as the [Interactive Fiction Database](https://ifdb.tads.org/),
 but it's safe to delete if you don't need it.
 
@@ -61,26 +66,34 @@ developers should find it similar to Inform's Standard Rules. It defines common
 components like Rooms and Characters, along with in-game commands like `GO`,
 `GET`, and `DROP` to enable basic interactivity.
 
-`Gamefic.script` is where you write the story itself. In the starter project,
+`script` is where you write the story itself. In the starter project,
 the only thing in the script is an introductory message.
 
 ### Modifying the Script
 
-Replace the contents of `main.rb` with the following:
+Replace the contents of `plot.rb` with the following:
 
 ```ruby
-require 'gamefic-standard'
+module Example
+  class Plot < Gamefic::Plot
+    UUID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 
-Gamefic.script do
-  @living_room = make Room, name: 'living room', description: 'This is your living room.'
-  @bedroom = make Room, name: 'bedroom', description: 'This is your bedroom.'
-  connect @living_room, @bedroom, 'north'
-  @backpack = make Room, name: 'backpack', description: 'Your trusty backpack.', parent: @bedroom
-  @book = make Room, name: 'book', description: 'Your favorite novel.', parent: @living_room
+    include Gamefic::Standard
 
-  introduction do |actor|
-    actor.parent = @living_room
-    actor.tell "You're in your house."
+    seed do
+      @living_room = make Room, name: 'living room', description: 'This is your living room.'
+      @bedroom = make Room, name: 'bedroom', description: 'This is your bedroom.'
+      connect @living_room, @bedroom, 'north'
+      @backpack = make Room, name: 'backpack', description: 'Your trusty backpack.', parent: @bedroom
+      @book = make Room, name: 'book', description: 'Your favorite novel.', parent: @living_room
+    end
+
+    script do
+      introduction do |actor|
+        actor.parent = @living_room
+        actor.tell "You're in your house."
+      end
+    end
   end
 end
 ```
