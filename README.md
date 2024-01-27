@@ -126,10 +126,9 @@ $ rake web:build
 ```
 
 The game's HTML file and related assets will be generated in the
-`builds/web/production` directory. The SDK uses
-[opal](https://github.com/opal/opal) to compile Ruby code to JavaScript, so the
-web build does not require a Ruby interpreter. Open `index.html` in a browser
-to play the game.
+`web/build` directory. The SDK uses opal](https://github.com/opal/opal)
+to compile Ruby code to JavaScript, so the web build does not require a
+Ruby interpreter. Open `index.html` in a browser to play the game.
 
 Note: building the web app requires [Node.js](https://nodejs.org).
 
