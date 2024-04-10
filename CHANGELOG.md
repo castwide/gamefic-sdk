@@ -1,3 +1,6 @@
+## 3.0.1 - April 10, 2024
+- Updates to README in project scaffold
+
 ## 3.0.0 - January 27, 2024
 - Deprecate broken/redundant commands
 - Improved serialization
