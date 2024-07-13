@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'gamefic-tty'
 require 'tmpdir'
 require 'zlib'

@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+lib = File.expand_path('./lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'gamefic'
 require 'gamefic-standard'
 
-require_relative '<%= name %>/plot'
-require_relative '<%= name %>/subplot'
+require '<%= name %>/plot'
+require '<%= name %>/subplot'
 
 # The Gamefic SDK uses this constant to select the main Plot for game engines.
 GAMEFIC_PLOT_CLASS = <%= camelcase(name) %>::Plot
