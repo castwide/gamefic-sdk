@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'erb'
+require 'ostruct'
 require 'pathname'
 require 'securerandom'
 require 'shellwords'

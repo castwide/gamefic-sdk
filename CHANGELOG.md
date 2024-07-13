@@ -1,3 +1,7 @@
+## 3.0.2 - July 13, 2024
+- Plot and Subplot classes in scaffold
+- Scaffold requires ostruct
+
 ## 3.0.1 - April 10, 2024
 - Updates to README in project scaffold
 
