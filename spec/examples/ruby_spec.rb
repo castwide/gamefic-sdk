@@ -19,7 +19,7 @@ RSpec.describe 'Examples (Ruby)' do
       Dir.mktmpdir do |tmpdir|
         name = File.basename(dir)
         Gamefic::Sdk::Scaffold.build 'project', File.join(tmpdir, name)
-        FileUtils.cp File.join(dir, 'plot.rb'), File.join(tmpdir, name, name, 'plot.rb')
+        FileUtils.cp File.join(dir, 'plot.rb'), File.join(tmpdir, name, 'lib', name, 'plot.rb')
         load File.join(tmpdir, name, 'main.rb')
         plot = GAMEFIC_PLOT_CLASS.new
         char = plot.introduce

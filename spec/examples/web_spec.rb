@@ -1,13 +1,4 @@
 RSpec.describe 'Examples (Web)', type: :feature, js: true do
-  # before :all do
-  #   @tmp = Dir.mktmpdir
-  #   Gamefic::Sdk::Scaffold.build 'project', @tmp
-  #   Dir.chdir @tmp do
-  #     Gamefic::Sdk::Tasks::Web.new.generate
-  #   end
-  #   Capybara.app = Rack::Files.new(File.join(@tmp))
-  # end
-
   before :all do
     @tmpdir = Dir.mktmpdir
     Capybara.app = Rack::Files.new(@tmpdir)
@@ -26,7 +17,7 @@ RSpec.describe 'Examples (Web)', type: :feature, js: true do
       Dir.chdir File.join(@tmpdir, name) do
         Gamefic::Sdk::Tasks::Web.new.generate
       end
-      FileUtils.cp File.join(dir, 'plot.rb'), File.join(@tmpdir, name, name, 'plot.rb')
+      FileUtils.cp File.join(dir, 'plot.rb'), File.join(@tmpdir, name, 'lib', name, 'plot.rb')
       Dir.chdir File.join(@tmpdir, name, 'web') do
         `npm run build`
       end
