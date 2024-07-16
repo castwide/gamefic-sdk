@@ -1,5 +1,6 @@
-require 'fileutils'
+require 'bundler'
 require 'erb'
+require 'fileutils'
 require 'ostruct'
 require 'pathname'
 require 'securerandom'
@@ -26,28 +27,33 @@ module Gamefic
 
       def render(file, data)
         template = File.read(file)
-        erb = ERB.new(template)
+        erb = ERB.new(template, trim_mode: '-')
         erb.result(data.get_binding)
       end
 
       def custom_copy origin, destination, data
         FileUtils.mkdir_p File.dirname(destination)
         if origin.end_with?('.gf.erb')
-          File.write destination[0..-8], render(origin, data)
+          content = render(origin, data)
+          return if content.empty?
+
+          File.write destination[0..-8], content
         else
           FileUtils.cp_r origin, destination
         end
       end
 
-      def build name, destination
+      def build name, destination, **opts
         dir = File.join(SCAFFOLDS_PATH, name)
         raise LoadError, "Scaffold `#{name}` does not exist" unless File.directory?(dir)
 
         path = Pathname.new('.').join(destination).realdirpath
-        data = Binder.new(name: File.basename(path))
+        data = Binder.new(name: File.basename(path), **opts)
         files = Dir.glob(File.join(dir, '**', '*'), File::FNM_DOTMATCH).select { |entry| File.file?(entry) }
         map = {}
         files.each do |file|
+          next if file.include?('/spec') && !opts[:specs]
+
           rename = File.join(File.dirname(file), File.basename(file)).gsub('__name__', data.name)
           dst = File.join(destination, rename[dir.length..-1])
           raise "Gamefic generation would overwrite existing file #{rename}" if File.file?(dst)
@@ -55,7 +61,9 @@ module Gamefic
           map[file] = dst
         end
         map.each_pair { |src, dst| custom_copy src, dst, data }
-        system "cd #{Shellwords.escape(destination)} && bundle install"
+        Bundler.with_unbundled_env do
+          Dir.chdir(path) { system 'bundle install' }
+        end
       end
     end
   end

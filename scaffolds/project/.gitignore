@@ -1,2 +1,4 @@
-build
-node_modules
+/coverage
+/ruby/build
+/web/build
+/web/node_modules

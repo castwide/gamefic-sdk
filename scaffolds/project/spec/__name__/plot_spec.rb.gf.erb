@@ -1,0 +1,24 @@
+RSpec.describe <%= camelcase(name) %>::Plot do
+  let(:plot) { <%= camelcase(name) %>::Plot.new }
+
+  it 'gives all entities a description' do
+    undescribed = plot.entities
+                      .reject(&:has_description?)
+
+    expect(undescribed).to be_empty
+  end
+
+  it 'uniquely identifies entities by name' do
+    actor = plot.introduce
+
+    plot.entities.that_are(Openable).each { |entity| entity.open = true }
+
+    plot.entities.that_are(Room).each do |room|
+      actor.parent = room
+      plot.available.select(actor).each do |entity|
+        result = plot.available(ambiguous: true).query(actor, entity.name)
+        expect(result.match).to eq([entity])
+      end
+    end
+  end
+end

@@ -1,3 +1,6 @@
+## 3.2.0
+- Optional specs in project scaffold
+
 ## 3.1.0 - July 13, 2024
 - Plot and Subplot classes in scaffold
 - Scaffold requires ostruct

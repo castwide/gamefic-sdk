@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+require 'bundler'
+require 'bundler/setup'
+require 'gamefic-sdk'
+require 'opal/rspec/rake_task'
+
+# Add the default Gamefic tasks for building and running games
+# Run `rake --tasks` for a list of commands and descriptions
+Gamefic::Sdk::Tasks.define_all
+<% if specs %>
+Opal::RSpec::RakeTask.new(:opal) do |_, config|
+  Bundler.definition
+         .dependencies_for([:default])
+         .each { |dep| Opal.use_gem dep.name }
+  Opal.append_path __dir__
+  Opal.append_path File.join(__dir__, 'lib')
+  config.pattern = 'spec/**/*_spec.rb'
+  config.requires = ['spec/opal_helper']
+end
+<% end %>

@@ -14,9 +14,10 @@ module Gamefic
 
       desc 'init DIRECTORY_NAME', 'Create a new project in DIRECTORY_NAME'
       option :gem, type: :boolean, aliases: [:g, :library, :rubygem], desc: 'Make a gem project'
+      option :specs, type: :boolean, desc: 'Add RSpec and Opal::RSpec test suites', default: true
       def init(directory_name)
         scaffold = options[:gem] ? 'library' : 'project'
-        Gamefic::Sdk::Scaffold.build scaffold, directory_name
+        Gamefic::Sdk::Scaffold.build scaffold, directory_name, specs: options[:specs]
         puts "Gamefic project initialized at #{File.realpath(directory_name)}"
       end
 

@@ -8,5 +8,13 @@ gem 'gamefic-standard'
 group :development do
   gem 'gamefic-sdk'
   gem 'gamefic-tty'
+<% if specs -%>
+  gem 'opal-rspec'
+  gem 'opal-sprockets'
+<% end -%>
   gem 'rake'
+<% if specs -%>
+  gem 'rspec'
+  gem 'simplecov'
+<% end -%>
 end
