@@ -1,0 +1,10 @@
+RSpec.describe <%= camelcase(name) %>::Subplot do
+  let(:plot) { <%= camelcase(name) %>::Plot.new }
+
+  it 'branches from plots' do
+    actor = plot.introduce
+    subplot = plot.branch(<%= camelcase(name) %>::Subplot, introduce: actor)
+    expect(plot.subplots).to eq([subplot])
+    expect(subplot.players).to eq([actor])
+  end
+end
