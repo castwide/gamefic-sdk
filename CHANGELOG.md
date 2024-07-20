@@ -1,5 +1,6 @@
-## 3.2.0
+## 3.2.0 - July 20, 2024
 - Optional specs in project scaffold
+- Reorganize project requirements
 
 ## 3.1.0 - July 13, 2024
 - Plot and Subplot classes in scaffold
