@@ -1,3 +1,6 @@
+## 3.2.1
+- Set default path for opal-rspec
+
 ## 3.2.0 - July 20, 2024
 - Optional specs in project scaffold
 - Reorganize project requirements
