@@ -12,13 +12,13 @@ module Gamefic
 
         # Generate a web app using NPM.
         #
-        def generate
+        def generate version = '@latest'
           puts "Node version #{check_for_npm} detected. Preparing the web app..."
           web_path = File.join(absolute_path, 'web')
           FileUtils.mkdir_p web_path
           Dir.chdir web_path do
             name = File.basename(absolute_path)
-            system 'npx', 'react-gamefic', '--name', name, '--class', 'GAMEFIC_PLOT_CLASS', '--path', '../lib'
+            system 'npx', '-y', "react-gamefic#{version}", '--name', name, '--class', 'GAMEFIC_PLOT_CLASS', '--path', '../lib'
             puts 'The web app is ready.'
             puts 'Run `rake web:run` to start the app in dev mode.'
           end

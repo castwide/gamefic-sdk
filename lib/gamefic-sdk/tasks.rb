@@ -18,9 +18,8 @@ module Gamefic::Sdk::Tasks
       Ruby.new.build
     end
 
-    define_task 'web:generate', 'Generate a web app' do
-      Web.new.generate
-    end
+    Rake::Task.define_task('web:generate', [:version]) { |_, args| Web.new.generate(args[:version]) }
+              .tap { |task| task.add_description 'Generate a web app' }
 
     define_task 'web:run', 'Run a standalone web app' do
       Web.new.run
@@ -31,7 +30,7 @@ module Gamefic::Sdk::Tasks
     end
   end
 
-  def define_task name, desc, &block
+  def define_task(name, desc, &block)
     return if Rake::Task.task_defined?(name)
 
     # @type [Rake::Task]

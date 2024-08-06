@@ -1,5 +1,6 @@
 ## 3.2.1
 - Set default path for opal-rspec
+- Selectable react-gamefic version (default is @latest)
 
 ## 3.2.0 - July 20, 2024
 - Optional specs in project scaffold
