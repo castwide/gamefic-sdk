@@ -1,4 +1,7 @@
-## 3.3.0
+## 3.3.1
+- Reorder project requires
+
+## 3.3.0 - September 10, 2024
 - Add chapter to project scaffold
 - Remove superfluous no_scripts calls
 
