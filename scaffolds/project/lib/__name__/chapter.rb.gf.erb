@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+module <%= camelcase(name) %>
+  # The base chapter.
+  #
+  # Authors should extend this class to create chapters that can be appended to
+  # the plot.
+  #
+  class Chapter < Gamefic::Chapter
+    include Gamefic::Standard
+  end
+end
