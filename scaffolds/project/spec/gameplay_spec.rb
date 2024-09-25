@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe 'gameplay' do
   let(:plot) { GAMEFIC_PLOT_CLASS.new }
 

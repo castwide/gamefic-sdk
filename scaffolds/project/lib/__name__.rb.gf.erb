@@ -4,6 +4,7 @@ require 'gamefic'
 require 'gamefic-standard'
 
 module <%= camelcase(name) %>
+  require '<%= name %>/common'
   require '<%= name %>/chapter'
   require '<%= name %>/plot'
   require '<%= name %>/subplot'

@@ -1,5 +1,6 @@
-## 3.3.1
+## 3.4.0
 - Reorder project requires
+- Add Common module to project scaffold
 
 ## 3.3.0 - September 10, 2024
 - Add chapter to project scaffold
