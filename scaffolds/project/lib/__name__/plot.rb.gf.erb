@@ -8,10 +8,8 @@ module <%= camelcase(name) %>
 
     include Common
 
-    script do
-      introduction do |actor|
-        actor.tell "Hello, world!"
-      end
+    introduction do |actor|
+      actor.tell "Hello, world!"
     end
   end
 end

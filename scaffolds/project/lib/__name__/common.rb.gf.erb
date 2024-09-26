@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module <%= camelcase(name) %>
-  # A single container for mixins that are shared among plots, chapters, and
+  # A single container for modules that are shared among plots, chapters, and
   # subplots.
   #
   module Common
     extend Gamefic::Scriptable
 
     include Gamefic::Standard
+    # Add more shared modules here
   end
 end
