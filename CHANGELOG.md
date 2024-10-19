@@ -1,6 +1,7 @@
-## 3.4.0
+## 3.4.0 - October 19, 2024
 - Reorder project requires
 - Add Common module to project scaffold
+- Lock gamefic-sdk-3 to react-gamefic-1
 
 ## 3.3.0 - September 10, 2024
 - Add chapter to project scaffold

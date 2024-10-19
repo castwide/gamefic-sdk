@@ -12,7 +12,7 @@ module Gamefic
 
         # Generate a web app using NPM.
         #
-        def generate version = '@latest'
+        def generate version = '@1.6.1'
           puts "Node version #{check_for_npm} detected. Preparing the web app..."
           web_path = File.join(absolute_path, 'web')
           FileUtils.mkdir_p web_path
