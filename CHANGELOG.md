@@ -1,3 +1,6 @@
+## 4.0.0
+- Update to latest react-gamefic
+
 ## 3.4.1 - October 20, 2024
 - Fix project UUID
 
