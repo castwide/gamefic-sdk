@@ -1,3 +1,6 @@
+## 3.4.1 - October 20, 2024
+- Fix project UUID
+
 ## 3.4.0 - October 19, 2024
 - Reorder project requires
 - Add Common module to project scaffold

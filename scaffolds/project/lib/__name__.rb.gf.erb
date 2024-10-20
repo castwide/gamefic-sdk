@@ -4,6 +4,8 @@ require 'gamefic'
 require 'gamefic-standard'
 
 module <%= camelcase(name) %>
+  UUID = '<%= SecureRandom.uuid %>'
+
   require '<%= name %>/common'
   require '<%= name %>/chapter'
   require '<%= name %>/plot'
