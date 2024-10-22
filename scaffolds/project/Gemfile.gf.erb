@@ -4,6 +4,9 @@ source "https://rubygems.org"
 
 gem 'gamefic'
 gem 'gamefic-standard'
+<% if autoload -%>
+  gem 'gamefic-autoload'
+<% end -%>
 
 group :development do
   gem 'gamefic-sdk'
