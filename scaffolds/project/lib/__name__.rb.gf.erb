@@ -2,7 +2,7 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-<% if autoload -%>require 'gamefic-autoload'<% end -%>
+<% if autoload -%>require 'gamefic-autoload'<% end %>
 
 module <%= camelcase(name) %>
   UUID = '<%= SecureRandom.uuid %>'
