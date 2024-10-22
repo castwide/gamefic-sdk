@@ -4,7 +4,7 @@ module <%= camelcase(name) %>
   # The main plot.
   #
   class Plot < Gamefic::Plot
-    include Common
+    include Shared
 
     introduction do |actor|
       actor.tell "Hello, world!"
