@@ -4,7 +4,7 @@ module Gamefic
   module Sdk
     class Shell < Thor
       map %w[--version -v] => :version
-      map [:create, :new] => :init
+      map %i[create new init] => :project
 
       desc "--version, -v", "Print the version"
       def version
@@ -12,13 +12,18 @@ module Gamefic
         puts "gamefic #{Gamefic::VERSION}"
       end
 
-      desc 'init DIRECTORY_NAME', 'Create a new project in DIRECTORY_NAME'
-      option :gem, type: :boolean, aliases: [:g, :library, :rubygem], desc: 'Make a gem project'
+      desc 'project DIRECTORY_NAME', 'Create a new project in DIRECTORY_NAME'
       option :specs, type: :boolean, desc: 'Add RSpec and Opal::RSpec test suites', default: true
-      def init(directory_name)
-        scaffold = options[:gem] ? 'library' : 'project'
-        Gamefic::Sdk::Scaffold.build scaffold, directory_name, specs: options[:specs]
+      option :autoload, type: :boolean, desc: 'Include autoloading', default: true
+      def project(directory_name)
+        Gamefic::Sdk::Scaffold.build 'project', directory_name, **options
         puts "Gamefic project initialized at #{File.realpath(directory_name)}"
+      end
+
+      desc 'library DIRECTORY_NAME', 'Create a new library in DIRECTORY_NAME'
+      def library(directory_name)
+        Gamefic::Sdk::Scaffold.build 'library', directory_name
+        puts "Gamefic library initialized at #{FIle.realpath(directory_name)}"
       end
 
       desc 'diagram TYPE', 'Get diagram data'
