@@ -28,6 +28,10 @@ module Gamefic::Sdk::Tasks
     define_task 'web:build', 'Build a distributable web app' do
       Web.new.build
     end
+
+    define_task 'web:autoload', 'Generate autoload.rb for Opal' do
+      Web.new.autoload
+    end
   end
 
   def define_task(name, desc, &block)
