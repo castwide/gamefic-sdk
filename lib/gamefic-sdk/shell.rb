@@ -14,7 +14,7 @@ module Gamefic
 
       desc 'project DIRECTORY_NAME', 'Create a new project in DIRECTORY_NAME'
       option :specs, type: :boolean, desc: 'Add RSpec and Opal::RSpec test suites', default: true
-      option :autoload, type: :boolean, desc: 'Include autoloading', default: true
+      option :autoloader, type: :boolean, desc: 'Include autoloader', default: true
       def project(directory_name)
         Gamefic::Sdk::Scaffold.build 'project', directory_name, **options
         puts "Gamefic project initialized at #{File.realpath(directory_name)}"

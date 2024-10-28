@@ -2,12 +2,12 @@
 
 require 'gamefic'
 require 'gamefic-standard'
-<% if autoload -%>require 'gamefic-autoload'<% end %>
+<% if autoloader -%>require 'gamefic-autoload'<% end %>
 
 module <%= camelcase(name) %>
   UUID = '<%= SecureRandom.uuid %>'
 
-<% if autoload -%>
+<% if autoloader -%>
   Gamefic::Autoload.setup(__dir__)
 <% else %>
   require '<%= name %>/shared'
