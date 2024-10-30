@@ -1,3 +1,4 @@
+require 'bundler'
 require 'rubygems'
 require 'gamefic-sdk'
 require 'rake'
@@ -46,12 +47,14 @@ module Gamefic::Sdk::Tasks
     RSpec::Core::RakeTask.new(:spec)
 
     Opal::RSpec::RakeTask.new(:opal) do |_, config|
-      Opal.append_path File.join(__dir__, 'lib')
-      Opal.use_gem 'gamefic'
-      Opal.use_gem 'gamefic-standard'
-      config.default_path = 'spec'
+      Web.new.autoload
+      Bundler.definition
+             .dependencies_for([:default])
+             .each { |dep| Opal.use_gem dep.name }
+      Opal.append_path '.'
+      Opal.append_path File.join('.', 'lib')
       config.pattern = 'spec/**/*_spec.rb'
-      config.requires = ['opal_helper']
+      config.requires = ['spec/opal_helper']
     end
   end
 
