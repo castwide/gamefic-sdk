@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'gamefic-sdk'
 require 'rake'
+require 'rspec/core/rake_task'
+require 'opal/rspec/rake_task'
 
 module Gamefic::Sdk::Tasks
   autoload :Common, 'gamefic-sdk/tasks/common'
@@ -9,7 +11,13 @@ module Gamefic::Sdk::Tasks
 
   module_function
 
-  def define_all
+  def define_all_tasks
+    define_build_tasks
+    define_spec_tasks
+  end
+  alias define_all define_all_tasks
+
+  def define_build_tasks
     define_task 'ruby:run', 'Run a Ruby CLI app' do
       Ruby.new.run
     end
@@ -31,6 +39,19 @@ module Gamefic::Sdk::Tasks
 
     define_task 'web:autoload', 'Generate autoload.rb for Opal' do
       Web.new.autoload
+    end
+  end
+
+  def define_spec_tasks
+    RSpec::Core::RakeTask.new(:spec)
+
+    Opal::RSpec::RakeTask.new(:opal) do |_, config|
+      Opal.append_path File.join(__dir__, 'lib')
+      Opal.use_gem 'gamefic'
+      Opal.use_gem 'gamefic-standard'
+      config.default_path = 'spec'
+      config.pattern = 'spec/**/*_spec.rb'
+      config.requires = ['opal_helper']
     end
   end
 
