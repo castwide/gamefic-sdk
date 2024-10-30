@@ -8,8 +8,8 @@ module <%= camelcase(name) %>
   UUID = '<%= SecureRandom.uuid %>'
 
 <% if autoloader -%>
-  Gamefic::Autoload.setup(__dir__)
-<% else %>
+  <%= render_autoloader -%>
+<% else -%>
   require '<%= name %>/shared'
   require '<%= name %>/chapter'
   require '<%= name %>/plot'

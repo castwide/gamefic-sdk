@@ -21,6 +21,18 @@ module Gamefic
         def get_binding
           binding
         end
+
+        def render_autoloader
+          if name.include?('-')
+            <<~CODE
+              Gamefic::Autoload.setup(__dir__) do |loader|
+                  loader.inflector.inflect('#{name}' => '#{camelcase(name)}')
+                end
+            CODE
+          else
+            'Gamefic::Autoload.setup(__dir__)'
+          end
+        end
       end
 
       module_function
