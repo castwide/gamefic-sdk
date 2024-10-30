@@ -47,7 +47,6 @@ module Gamefic::Sdk::Tasks
     RSpec::Core::RakeTask.new(:spec)
 
     Opal::RSpec::RakeTask.new(:opal) do |_, config|
-      Web.new.autoload
       Bundler.definition
              .dependencies_for([:default])
              .each { |dep| Opal.use_gem dep.name }
@@ -56,6 +55,8 @@ module Gamefic::Sdk::Tasks
       config.pattern = 'spec/**/*_spec.rb'
       config.requires = ['spec/opal_helper']
     end
+
+    Rake::Task.define_task(:opal).prerequisite_tasks.push('web:autoload')
   end
 
   def define_task(name, desc, &block)

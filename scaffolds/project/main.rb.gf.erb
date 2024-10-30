@@ -4,7 +4,6 @@ lib = File.expand_path('./lib', File.dirname(__FILE__))
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require '<%= name %>'
-<% if autoloader -%>require 'autoload' if RUBY_ENGINE == 'opal'<% end %>
 
 # The Gamefic SDK uses this constant to select the main Plot for game engines.
 GAMEFIC_PLOT_CLASS = <%= camelcase(name) %>::Plot

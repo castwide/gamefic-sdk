@@ -3,6 +3,7 @@
 require 'gamefic'
 require 'gamefic-standard'
 <% if autoloader -%>require 'gamefic-autoload'<% end %>
+<% if autoloader -%>require 'autoload' if RUBY_ENGINE == 'opal'<% end %>
 
 module <%= camelcase(name) %>
   UUID = '<%= SecureRandom.uuid %>'
