@@ -18,14 +18,12 @@ module Gamefic
           web_path = File.join(absolute_path, 'web')
           FileUtils.mkdir_p web_path
           Dir.chdir web_path do
-            name = File.basename(absolute_path)
-            system 'npx', '-y', "react-gamefic#{version}", '--name', name, '--class', 'GAMEFIC_PLOT_CLASS', '--path',
-                   '../lib'
+            system 'npx', '-y', "react-gamefic#{version}", '--name', File.basename(absolute_path),
+                   '--class', 'GAMEFIC_PLOT_CLASS', '--path', '../lib'
           end
           autoload
-          puts 'The web app is ready.'
-          puts 'Run `rake web:run` to start the app in dev mode.'
-      end
+          puts 'The web app is ready.', 'Run `rake web:run` to start the app in dev mode.'
+        end
 
         # Generate the autoload.rb file for Opal builds.
         #

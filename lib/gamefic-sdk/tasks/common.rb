@@ -11,7 +11,7 @@ module Gamefic
       module Common
         attr_reader :directory
 
-        def initialize directory = '.'
+        def initialize(directory = '.')
           @directory = directory
         end
 
@@ -23,7 +23,7 @@ module Gamefic
           GAMEFIC_PLOT_CLASS
         end
 
-        def string_to_constant string
+        def string_to_constant(string)
           space = Object
           string.split('::').each do |part|
             space = space.const_get(part)

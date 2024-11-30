@@ -44,25 +44,27 @@ module Gamefic
 
         private
 
-        def append_gem name
+        def append_gem(name)
           result = {}
           # @type [Gem::Specification]
           spec = Gem::Specification.find_by_name(name)
           spec.lib_files.each do |path|
             full = File.join(spec.full_gem_path, path)
             raise LoadError, "Unable to package gem file `#{path}`" unless File.file?(full)
-            rel = full.sub(/^(#{spec.load_paths.join('|')})\//, '')
+
+            rel = full.sub(%r{^(#{spec.load_paths.join('|')})/}, '')
             result[rel] = full
           end
           result
         end
 
-        def relativize path
-          return { path[absolute_path.length+1..-1] => path } if path.start_with?(absolute_path)
+        def relativize(path)
+          return { path[absolute_path.length + 1..-1] => path } if path.start_with?(absolute_path)
+
           # @param spec [Gem::Specification]
           Gem::Specification.each do |spec|
             spec.load_paths.each do |lib_path|
-              return { path[lib_path.length+1..-1] => path } if path.start_with?(lib_path)
+              return { path[lib_path.length + 1..-1] => path } if path.start_with?(lib_path)
             end
           end
           raise LoadError, "Unable to package loaded path `#{path}`"
