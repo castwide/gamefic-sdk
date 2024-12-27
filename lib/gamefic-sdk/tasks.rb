@@ -16,7 +16,6 @@ module Gamefic::Sdk::Tasks
     define_build_tasks
     define_spec_tasks
   end
-  alias define_all define_all_tasks
 
   def define_build_tasks
     define_task 'ruby:run', 'Run a Ruby CLI app' do

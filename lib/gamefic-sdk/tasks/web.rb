@@ -30,6 +30,7 @@ module Gamefic
         def autoload
           require_relative File.join(absolute_path, 'main')
           if defined?(Gamefic::Autoload)
+            require 'gamefic-autoload'
             puts 'Generating autoload.rb file for Opal'
             autoload_path = File.join(absolute_path, 'autoload.rb')
             autoload_file = <<~FILE

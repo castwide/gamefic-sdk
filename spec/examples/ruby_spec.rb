@@ -22,12 +22,12 @@ RSpec.describe 'Examples (Ruby)' do
         FileUtils.cp File.join(dir, 'plot.rb'), File.join(tmpdir, name, 'lib', name, 'plot.rb')
         load File.join(tmpdir, name, 'main.rb')
         plot = GAMEFIC_PLOT_CLASS.new
+        narrator = Gamefic::Narrator.new(plot)
         char = plot.introduce
-        plot.ready
         char.perform 'test me'
         until char.queue.empty?
-          plot.update
-          plot.ready
+          narrator.finish
+          narrator.start
         end
         expect(char).to be_concluding
       end
