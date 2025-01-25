@@ -43,31 +43,23 @@ something like this:
 ```ruby
 module Example
   class Plot < Gamefic::Plot
-    UUID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    include Shared
 
-    include Gamefic::Standard
-
-    script do
-      introduction do |actor|
-        actor.tell "Hello, world!"
-      end
+    introduction do |actor|
+      actor.tell "Hello, world!"
     end
   end
 end
 ```
 
-`UUID` is a globally unique identifier. It can be useful if you want to
-add your game to online catalogs, such as the [Interactive Fiction Database](https://ifdb.tads.org/),
-but it's safe to delete if you don't need it.
+The `Shared` module (`lib/example/shared.rb`) handles importing `Gamefic::Standard` into plots,
+subplots, and chapters.
 
-['gamefic-standard'](https://github.com/castwide/gamefic-standard) is a collection
+['Gamefic::Standard'](https://github.com/castwide/gamefic-standard) is a collection
 of baseline features that are frequently useful for interactive fiction. [Inform](http://inform7.com/)
 developers should find it similar to Inform's Standard Rules. It defines common
 components like Rooms and Characters, along with in-game commands like `GO`,
 `GET`, and `DROP` to enable basic interactivity.
-
-`script` is where you write the story itself. In the starter project,
-the only thing in the script is an introductory message.
 
 ### Modifying the Script
 
@@ -76,23 +68,16 @@ Replace the contents of `plot.rb` with the following:
 ```ruby
 module Example
   class Plot < Gamefic::Plot
-    UUID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    include Shared
 
-    include Gamefic::Standard
+    construct :living_room, Room, name: 'living room', description: 'This is your living room.'
+    construct :bedroom, Room, name: 'bedroom', description: 'This is your bedroom.', south: living_room
+    construct :backpack, Item, name: 'backpack', description: 'Your trusty backpack.', parent: bedroom
+    construct :book, Item, name: 'book', description: 'Your favorite novel.', parent: living_room
 
-    seed do
-      @living_room = make Room, name: 'living room', description: 'This is your living room.'
-      @bedroom = make Room, name: 'bedroom', description: 'This is your bedroom.'
-      connect @living_room, @bedroom, 'north'
-      @backpack = make Room, name: 'backpack', description: 'Your trusty backpack.', parent: @bedroom
-      @book = make Room, name: 'book', description: 'Your favorite novel.', parent: @living_room
-    end
-
-    script do
-      introduction do |actor|
-        actor.parent = @living_room
-        actor.tell "You're in your house."
-      end
+    introduction do |actor|
+      actor.parent = living_room
+      actor.tell "You're in your house."
     end
   end
 end

@@ -1,5 +1,7 @@
-## 4.0.0
-- Update to latest react-gamefic
+## 4.0.0 - January 25, 2025
+- Update to Gamefic 4.0
+- Project and library subcommands
+- Autoloading in projects
 
 ## 3.4.1 - October 20, 2024
 - Fix project UUID
