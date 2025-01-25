@@ -9,7 +9,7 @@ RSpec.describe 'Examples (Ruby)' do
   end
 
   after :all do
-
+    FileUtils.remove_entry @tmpdir
   end
 
   Dir[File.join('examples', '*')].each do |dir|
