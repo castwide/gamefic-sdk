@@ -2,16 +2,13 @@
 
 source 'https://rubygems.org'
 
-base = 'D:/fsnyd/Documents/code/gamefic'
-
-gem 'gamefic', path: "#{base}/gamefic"
-gem 'gamefic-standard', path: "#{base}/gamefic-standard"
-gem 'gamefic-what', path: "#{base}/gamefic-what" # @todo Remove this line
-<% if autoloader -%>gem 'gamefic-autoload', path: "#{base}/gamefic-autoload"<% end %>
+gem 'gamefic'
+gem 'gamefic-standard'
+<% if autoloader -%>gem 'gamefic-autoload'<% end %>
 
 group :development do
-  gem 'gamefic-sdk', path: "#{base}/gamefic-sdk"
-  gem 'gamefic-tty', path: "#{base}/gamefic-tty"
+  gem 'gamefic-sdk'
+  gem 'gamefic-tty'
 <% if specs -%>
   gem 'opal-rspec'
   gem 'opal-sprockets'

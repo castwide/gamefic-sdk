@@ -1,3 +1,6 @@
+## 4.0.1 - January 26, 2025
+- Fix project Gemfile
+
 ## 4.0.0 - January 25, 2025
 - Update to Gamefic 4.0
 - Project and library subcommands

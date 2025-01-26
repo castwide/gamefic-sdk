@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.7.0'
 
-  spec.add_runtime_dependency 'gamefic', '~> 4.0'
+  spec.add_runtime_dependency 'gamefic', '~> 4.0', '>= 4.0.1'
   spec.add_runtime_dependency 'gamefic-standard', '~> 4.0'
   spec.add_runtime_dependency 'gamefic-tty', '~> 4.0'
   spec.add_runtime_dependency 'listen', '~> 3.0'
