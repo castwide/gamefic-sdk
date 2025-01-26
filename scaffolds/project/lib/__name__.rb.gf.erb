@@ -9,7 +9,7 @@ module <%= camelcase(name) %>
   UUID = '<%= SecureRandom.uuid %>'
 
 <% if autoloader -%>
-  <%= render_autoloader -%>
+  <%= render_autoloader %>
 <% else -%>
   require '<%= name %>/shared'
   require '<%= name %>/chapter'

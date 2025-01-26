@@ -1,5 +1,6 @@
 ## 4.0.1 - January 26, 2025
 - Fix project Gemfile
+- Format project namespace module
 
 ## 4.0.0 - January 25, 2025
 - Update to Gamefic 4.0
