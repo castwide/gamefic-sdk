@@ -15,7 +15,7 @@ RSpec.describe Gamefic::Sdk::Scaffold do
   it 'sets filenames' do
     Dir.mktmpdir do |dir|
       base = File.basename(dir)
-      gemspec = File.join(dir, "#{base}.gemspec")
+      gemspec = File.join(dir, "#{base.gsub(/-/, '_')}.gemspec")
       Gamefic::Sdk::Scaffold.build('library', dir)
       expect(File.exist?(gemspec)).to be(true)
     end

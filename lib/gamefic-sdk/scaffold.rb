@@ -23,15 +23,7 @@ module Gamefic
         end
 
         def render_autoloader
-          if name.include?('-')
-            <<~CODE
-              Gamefic::Autoload.setup(__dir__) do |loader|
-                  loader.inflector.inflect('#{name}' => '#{camelcase(name)}')
-                end
-            CODE
-          else
-            'Gamefic::Autoload.setup(__dir__)'
-          end
+          'Gamefic::Autoload.setup(__dir__)'
         end
       end
 
@@ -66,7 +58,7 @@ module Gamefic
         files.each do |file|
           next if file.include?('/spec') && !opts[:specs]
 
-          rename = File.join(File.dirname(file), File.basename(file)).gsub('__name__', data.name)
+          rename = File.join(File.dirname(file), File.basename(file)).gsub('__name__', data.snake_case(data.name))
           dst = File.join(destination, rename[dir.length..-1])
           raise "Gamefic generation would overwrite existing file #{rename}" if File.file?(dst)
 

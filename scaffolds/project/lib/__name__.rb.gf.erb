@@ -11,9 +11,9 @@ module <%= camelcase(name) %>
 <% if autoloader -%>
   <%= render_autoloader %>
 <% else -%>
-  require '<%= name %>/shared'
-  require '<%= name %>/chapter'
-  require '<%= name %>/plot'
-  require '<%= name %>/subplot'
+  require '<%= snake_case(name) %>/shared'
+  require '<%= snake_case(name) %>/chapter'
+  require '<%= snake_case(name) %>/plot'
+  require '<%= snake_case(name) %>/subplot'
 <% end -%>
 end

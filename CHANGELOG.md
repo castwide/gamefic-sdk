@@ -1,3 +1,6 @@
+## 4.1.1
+- Scaffolds snake_case lib folders for Zeitwerk compatibility
+
 ## 4.1.0 - February 1, 2025
 - Update gamefic dependency
 
