@@ -23,7 +23,7 @@ module Gamefic
       desc 'library DIRECTORY_NAME', 'Create a new library in DIRECTORY_NAME'
       def library(directory_name)
         Gamefic::Sdk::Scaffold.build 'library', directory_name
-        puts "Gamefic library initialized at #{FIle.realpath(directory_name)}"
+        puts "Gamefic library initialized at #{File.realpath(directory_name)}"
       end
     end
   end
