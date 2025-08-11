@@ -1,3 +1,6 @@
+## 4.1.2 - August 11, 2025
+- Typo in shell command
+
 ## 4.1.1 - March 7, 2025
 - Scaffolds snake_case lib folders for Zeitwerk compatibility
 
