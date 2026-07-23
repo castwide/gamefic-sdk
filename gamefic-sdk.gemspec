@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ['gamefic']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.7.0'
+  spec.required_ruby_version = '>= 3.1.0'
 
   spec.add_runtime_dependency 'gamefic', '~> 4.2', '>= 4.2.3'
   spec.add_runtime_dependency 'gamefic-standard', '~> 4.0'
