@@ -1,3 +1,6 @@
+## 4.1.3 - July 23, 2026
+- Dependency updates
+
 ## 4.1.2 - August 11, 2025
 - Typo in shell command
 
